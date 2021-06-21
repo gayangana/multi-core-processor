@@ -23,20 +23,29 @@ module IRAM (
     parameter JPNZ  = 16'd35;
     parameter ENDOP = 16'd40;
     parameter LDA   = 16'd45;
-    parameter LDB   =16'd51;
-    parameter LDC   =16'd57;
+    parameter LDB   = 16'd51;
+    parameter LDC   = 16'd57;
+    parameter MVA   = 16'd16;
+    parameter MVB   = 16'd42;
+    parameter MVC   = 16'd43;
+    parameter MVACC = 16'd44;
+    parameter STC   = 16'd63;
 
     initial begin
         //assmebly code
         ram[0] = LDA;
         ram[1] = 16'd5;
-        ram[2] = LDB;
-        ram[3] = 16'd10;
-        ram[4] = LDC;
-        ram[5] = 16'd15;
-        ram[6] = LDAC;
-        ram[7] = 16'd5;
-        ram[8] = ENDOP;
+        ram[2] = MVA;
+        ram[3] = LDB;
+        ram[4] = 16'd10;
+        ram[5] = MVB;
+        ram[6] = LDC;
+        ram[7] = 16'd15;
+        ram[8] = STC;
+        ram[9] = 16'd25;
+        ram[10] = LDAC;
+        ram[11] = 16'd5;
+        ram[12] = ENDOP;
 
 
 
