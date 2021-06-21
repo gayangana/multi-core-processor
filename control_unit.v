@@ -11,7 +11,8 @@ module control_unit(
     output reg IR_read_en, 
     output reg AC_read_en,
     output reg R_read_en,  
-    output reg DM_read_en, 
+    output reg DM_read_en,
+	output reg DR_read_en,
     output reg IM_read_en, 
 
     output reg PC_write_en, 
@@ -20,16 +21,14 @@ module control_unit(
     output reg AC_write_en, 
     output reg R_write_en,  
     output reg DM_write_en, 
-    output reg DM_addr_write_en,
+    output reg DR_write_en,
     output reg IM_write_en, 
 
     output reg PC_inc_en,
     output reg AC_inc_en,
 
-    output reg ALU_to_AC_write_en,
-    output reg ALU_write_en,
-
-    output reg AC_to_R_en
+    output reg AC_clear_en,
+    output reg ALU_to_AC_write_en
 
 );
 
@@ -70,37 +69,31 @@ module control_unit(
     inac1 = 16'd23,
 
     sub1 = 16'd24,
+    sub2 = 16'd25,
 
-    mul1 = 16'd25,
-    mul2 = 16'd39,
+    mul1 = 16'd26,
+    mul2 = 16'd27,
 
-    mulm1 = 16'd26,
-    mulm2 = 16'd27,
-    mulm3 = 16'd28,
-    mulm4 = 16'd29,
+    mulm1 = 16'd28,
+    mulm2 = 16'd29,
+    mulm3 = 16'd30,
+    mulm4 = 16'd31,
 
-    clac1 = 16'd30,
+    clac1 = 16'd32,
 
-    jump1 = 16'd31,
-    jump2 = 16'd32,
+    jump1 = 16'd33,
+    jump2 = 16'd34,
 
-    jmpz = 16'd33,
-	jmpzp1 = 16'd34,
-    jmpzn1 = 16'd35,
-    jmpzn2 = 16'd36,
+    jpnz1 = 16'd35,
+	jpnz2 = 16'd36,
+    jpnz3 = 16'd37,
+    jpnz4 = 16'd38,
+    jpnzx = 16'd39,
 
-    endop = 16'd37,
-    no_op = 16'd38;
+    endop = 16'd40,
+    no_op = 16'd41;
 
     
-
-    always @(posedge clk) begin
-        if (state == endop)
-            end_process <= 1'b1;
-        
-        else
-            end_process <= 1'b0;
-    end
 
     always @(posedge clk)begin
         case (state)
@@ -114,6 +107,7 @@ module control_unit(
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
+                DR_read_en <= 1'b0;
                 IM_read_en <= 1'b0;
 
                 PC_write_en <= 1'b0;
@@ -122,16 +116,16 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
+
+                end_process <= 1'b0;
 
 
                 if (status == 2'b01)
@@ -143,30 +137,29 @@ module control_unit(
             fetch1: begin
                 alu_op   <= 3'd0;
 
-                PC_read_en <= 1'b1;     //PC write data to bus
+                PC_read_en <= 1'b0;     
                 AR_read_en <= 1'b0;
                 IR_read_en <= 1'b0;
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
-                IM_read_en <= 1'b0;
+                DR_read_en <= 1'b0;
+                IM_read_en <= 1'b1;     //IM write data to bus (PC is pointed to address of IM)
 
                 PC_write_en <= 1'b0;
-                AR_write_en <= 1'b1;    //bus write data to AR
-                IR_write_en <= 1'b0;
+                AR_write_en <= 1'b0;    
+                IR_write_en <= 1'b1;    //bus write data to IR
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
-                PC_inc_en <= 1'b0;
+                PC_inc_en <= 1'b1;      //PC=PC+1 (PC pointing to next instr)
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
 
 
                 state <= fetch2;
@@ -182,7 +175,8 @@ module control_unit(
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
-                IM_read_en <= 1'b1;     //IM write data to bus
+                DR_read_en <= 1'b0;
+                IM_read_en <= 1'b1;     
 
                 PC_write_en <= 1'b0;
                 AR_write_en <= 1'b0;
@@ -190,16 +184,14 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
-                PC_inc_en <= 1'b1;      //PC = PC+1
+                PC_inc_en <= 1'b0;      //PC = PC+1
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
 
 
                 state <= fetch3;
@@ -215,122 +207,124 @@ module control_unit(
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
+                DR_read_en <= 1'b0;
                 IM_read_en <= 1'b0;
 
                 PC_write_en <= 1'b0;
-                AR_write_en <= 1'b0;
-                IR_write_en <= 1'b1;    //bus write data to IR
+                AR_write_en <= 1'b1;
+                IR_write_en <= 1'b0;    
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
 
-                state <= fetch4;
-            end
-
-            fetch4: begin
-            
-                alu_op   <= 3'd0;
-
-                PC_read_en <= 1'b1;     //PC write data to bus 
-                AR_read_en <= 1'b0;
-                IR_read_en <= 1'b1;     //IR sends data to control unit
-                AC_read_en <= 1'b0;
-                R_read_en  <= 1'b0;
-                DM_read_en <= 1'b0;
-                IM_read_en <= 1'b0;
-
-                PC_write_en <= 1'b0;
-                AR_write_en <= 1'b1;    //bus write data to AR
-                IR_write_en <= 1'b0;
-                AC_write_en <= 1'b0;
-                R_write_en  <= 1'b0;
-                DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
-                IM_write_en <= 1'b0;
-
-                PC_inc_en <= 1'b0;
-                AC_inc_en <= 1'b0;
-
-                ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
-
-                state <= fetch5;
-            end
-
-            fetch5:begin
-                alu_op   <= 3'd0;
-
-                PC_read_en <= 1'b0;
-                AR_read_en <= 1'b0;
-                IR_read_en <= 1'b0;
-                AC_read_en <= 1'b0;
-                R_read_en  <= 1'b0;
-                DM_read_en <= 1'b0;
-                IM_read_en <= 1'b0;
-
-                PC_write_en <= 1'b0;
-                AR_write_en <= 1'b0;
-                IR_write_en <= 1'b0;
-                AC_write_en <= 1'b0;
-                R_write_en  <= 1'b0;
-                DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
-                IM_write_en <= 1'b0;
-
-                PC_inc_en <= 1'b0;
-                AC_inc_en <= 1'b0;
-
-                ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
-
-
-                state <= fetch6;
-            end
-
-            fetch6:begin
-                alu_op   <= 3'd0;
-
-                PC_read_en <= 1'b0;
-                AR_read_en <= 1'b0;
-                IR_read_en <= 1'b0;
-                AC_read_en <= 1'b0;
-                R_read_en  <= 1'b0;
-                DM_read_en <= 1'b0;
-                IM_read_en <= 1'b0;
-
-                PC_write_en <= 1'b0;
-                AR_write_en <= 1'b0;
-                IR_write_en <= 1'b0;
-                AC_write_en <= 1'b0;
-                R_write_en  <= 1'b0;
-                DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
-                IM_write_en <= 1'b0;
-
-                PC_inc_en <= 1'b0;
-                AC_inc_en <= 1'b0;
-
-                ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
 
                 state <= instruction;
             end
+
+            // fetch4: begin
+            
+            //     alu_op   <= 3'd0;
+
+            //     PC_read_en <= 1'b0;     //PC write data to bus 
+            //     AR_read_en <= 1'b0;
+            //     IR_read_en <= 1'b0;     //IR sends data to control unit
+            //     AC_read_en <= 1'b0;
+            //     R_read_en  <= 1'b0;
+            //     DM_read_en <= 1'b0;
+            //     IM_read_en <= 1'b0;
+
+            //     PC_write_en <= 1'b0;
+            //     AR_write_en <= 1'b0;    //bus write data to AR
+            //     IR_write_en <= 1'b0;
+            //     AC_write_en <= 1'b0;
+            //     R_write_en  <= 1'b0;
+            //     DM_write_en <= 1'b0;
+            //     DR_write_en <= 1'b0;
+            //     IM_write_en <= 1'b0;
+
+            //     PC_inc_en <= 1'b0;
+            //     AC_inc_en <= 1'b0;
+
+            //      <= 1'b0;
+            //     ALU_write_en       <= 1'b0;
+                
+            //      <= 1'b0;
+            //     AC_clear_en <= 1'b0;
+
+
+            //     state <= fetch5;
+            // end
+
+            // fetch5:begin
+            //     alu_op   <= 3'd0;
+
+            //     PC_read_en <= 1'b0;
+            //     AR_read_en <= 1'b0;
+            //     IR_read_en <= 1'b0;
+            //     AC_read_en <= 1'b0;
+            //     R_read_en  <= 1'b0;
+            //     DM_read_en <= 1'b0;
+            //     IM_read_en <= 1'b0;
+
+            //     PC_write_en <= 1'b0;
+            //     AR_write_en <= 1'b0;
+            //     IR_write_en <= 1'b0;
+            //     AC_write_en <= 1'b0;
+            //     R_write_en  <= 1'b0;
+            //     DM_write_en <= 1'b0;
+            //     DR_write_en <= 1'b0;
+            //     IM_write_en <= 1'b0;
+
+            //     PC_inc_en <= 1'b0;
+            //     AC_inc_en <= 1'b0;
+
+            //      <= 1'b0;
+            //     ALU_write_en       <= 1'b0;
+                
+            //      <= 1'b0;
+
+
+            //     state <= fetch6;
+            // end
+
+            // fetch6:begin
+            //     alu_op   <= 3'd0;
+
+            //     PC_read_en <= 1'b0;
+            //     AR_read_en <= 1'b0;
+            //     IR_read_en <= 1'b0;
+            //     AC_read_en <= 1'b0;
+            //     R_read_en  <= 1'b0;
+            //     DM_read_en <= 1'b0;
+            //     IM_read_en <= 1'b0;
+
+            //     PC_write_en <= 1'b0;
+            //     AR_write_en <= 1'b0;
+            //     IR_write_en <= 1'b0;
+            //     AC_write_en <= 1'b0;
+            //     R_write_en  <= 1'b0;
+            //     DM_write_en <= 1'b0;
+            //     DR_write_en <= 1'b0;
+            //     IM_write_en <= 1'b0;
+
+            //     PC_inc_en <= 1'b0;
+            //     AC_inc_en <= 1'b0;
+
+            //      <= 1'b0;
+            //     ALU_write_en       <= 1'b0;
+                
+            //      <= 1'b0;
+
+            //     state <= instruction;
+            // end
 
             ldac1: begin
             
@@ -341,8 +335,9 @@ module control_unit(
                 IR_read_en <= 1'b0;
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
-                DM_read_en <= 1'b0;
-                IM_read_en <= 1'b1;     //IM write data to bus
+                DM_read_en <= 1'b1;
+                DR_read_en <= 1'b0;
+                IM_read_en <= 1'b0;     
 
                 PC_write_en <= 1'b0;
                 AR_write_en <= 1'b0;
@@ -350,22 +345,19 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
-                PC_inc_en <= 1'b1;      //PC=PC+1
+                PC_inc_en <= 1'b0;      //PC=PC+1
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
 
-
-                state <= ldacx;
+                state <= ldac2;
             end
 
-            ldacx: begin
+            ldac2: begin
             
                 alu_op   <= 3'd0;
 
@@ -375,7 +367,8 @@ module control_unit(
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
-                IM_read_en <= 1'b0;     //IM write data to bus
+                DR_read_en <= 1'b0;
+                IM_read_en <= 1'b0;     
 
                 PC_write_en <= 1'b0;
                 AR_write_en <= 1'b0;
@@ -383,21 +376,18 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b1;
                 IM_write_en <= 1'b0;
 
-                PC_inc_en <= 1'b0;      //PC=PC+1
+                PC_inc_en <= 1'b1;      
                 AC_inc_en <= 1'b0;
 
-                ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
+                AC_clear_en <= 1'b0;
 
-                state <= ldac2;
+                state <= ldac3;
             end
 
-            ldac2: begin
+            ldac3: begin
         
                 alu_op   <= 3'd0;
 
@@ -406,60 +396,60 @@ module control_unit(
                 IR_read_en <= 1'b0;
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
-                DM_read_en <= 1'b1;     //DM write data to bus
+                DM_read_en <= 1'b0;     //DM write data to bus
+                DR_read_en <= 1'b1;
                 IM_read_en <= 1'b0;
 
                 PC_write_en <= 1'b0;
                 AR_write_en <= 1'b0;
                 IR_write_en <= 1'b0;
-                AC_write_en <= 1'b0;
+                AC_write_en <= 1'b1;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
-
-                state <= ldac3;
-            end
-
-            ldac3: begin
-  
-                alu_op   <= 3'd0;
-
-                PC_read_en <= 1'b0;
-                AR_read_en <= 1'b0;
-                IR_read_en <= 1'b0;
-                AC_read_en <= 1'b0;     
-                R_read_en  <= 1'b0;
-                DM_read_en <= 1'b0;
-                IM_read_en <= 1'b0;
-
-                PC_write_en <= 1'b0;
-                AR_write_en <= 1'b0;
-                IR_write_en <= 1'b0;
-                AC_write_en <= 1'b1;       //Bus write data to AC
-                R_write_en  <= 1'b0;
-                DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
-                IM_write_en <= 1'b0;
-
-                PC_inc_en <= 1'b0;
-                AC_inc_en <= 1'b0;
-
-                ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
 
                 state <= fetch1;
             end
+
+            // ldac3: begin
+  
+            //     alu_op   <= 3'd0;
+
+            //     PC_read_en <= 1'b0;
+            //     AR_read_en <= 1'b0;
+            //     IR_read_en <= 1'b0;
+            //     AC_read_en <= 1'b0;     
+            //     R_read_en  <= 1'b0;
+            //     DM_read_en <= 1'b0;
+            //     DR_read_en <= 1'b0;
+            //     IM_read_en <= 1'b0;
+
+            //     PC_write_en <= 1'b0;
+            //     AR_write_en <= 1'b0;
+            //     IR_write_en <= 1'b0;
+            //     AC_write_en <= 1'b1;       //Bus write data to AC
+            //     R_write_en  <= 1'b0;
+            //     DM_write_en <= 1'b0;
+            //     DR_write_en <= 1'b0;
+            //     IM_write_en <= 1'b0;
+
+            //     PC_inc_en <= 1'b0;
+            //     AC_inc_en <= 1'b0;
+
+            //      <= 1'b0;
+            //     ALU_write_en       <= 1'b0;
+                
+            //      <= 1'b0;
+
+            //     state <= fetch1;
+            // end
 
             stac1: begin
                 alu_op   <= 3'd0;
@@ -467,10 +457,10 @@ module control_unit(
                 PC_read_en <= 1'b0;
                 AR_read_en <= 1'b0;
                 IR_read_en <= 1'b0;
-                AC_read_en <= 1'b0;
+                AC_read_en <= 1'b1;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
-                IM_read_en <= 1'b1;     //IM write data to bus
+                IM_read_en <= 1'b0;     
 
                 PC_write_en <= 1'b0;
                 AR_write_en <= 1'b0;
@@ -478,22 +468,19 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b1;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b1;      //PC=PC+1
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
 
-
-                state <= stacx;
+                state <= stac2;
             end
 
-            stacx: begin
+            stac2: begin
             
                 alu_op   <= 3'd0;
 
@@ -503,6 +490,7 @@ module control_unit(
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
+                DR_read_en <= 1'b1;
                 IM_read_en <= 1'b0;    
 
                 PC_write_en <= 1'b0;
@@ -510,82 +498,80 @@ module control_unit(
                 IR_write_en <= 1'b0;
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
-                DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b1;
-                IM_write_en <= 1'b0;
-
-                PC_inc_en <= 1'b0;      
-                AC_inc_en <= 1'b0;
-
-                ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
-
-                state <= stac2;
-            end
-
-            stac2: begin
-                alu_op   <= 3'd0;
-
-                PC_read_en <= 1'b0;
-                AR_read_en <= 1'b0;     
-                IR_read_en <= 1'b0;
-                AC_read_en <= 1'b1;     //AC write data to bus
-                R_read_en  <= 1'b0;
-                DM_read_en <= 1'b0;
-                IM_read_en <= 1'b0;     
-
-                PC_write_en <= 1'b0;
-                AR_write_en <= 1'b0;
-                IR_write_en <= 1'b0;
-                AC_write_en <= 1'b0;
-                R_write_en  <= 1'b0;
-                DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
-                IM_write_en <= 1'b0;
-
-                PC_inc_en <= 1'b0;      
-                AC_inc_en <= 1'b0;
-
-                ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
-
-                state <= stac3;
-            end
-
-            stac3: begin
-                alu_op   <= 3'd0;
-
-                PC_read_en <= 1'b0;
-                AR_read_en <= 1'b1;     //AC write data to bus
-                IR_read_en <= 1'b0;
-                AC_read_en <= 1'b0;
-                R_read_en  <= 1'b0;
-                DM_read_en <= 1'b0;
-                IM_read_en <= 1'b0;     
-
-                PC_write_en <= 1'b0;
-                AR_write_en <= 1'b0;
-                IR_write_en <= 1'b0;
-                AC_write_en <= 1'b0;
-                R_write_en  <= 1'b0;
                 DM_write_en <= 1'b1;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;      
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b0;
-                
+
                 state <= fetch1;
             end
+
+            // stac2: begin
+            //     alu_op   <= 3'd0;
+
+            //     PC_read_en <= 1'b0;
+            //     AR_read_en <= 1'b0;     
+            //     IR_read_en <= 1'b0;
+            //     AC_read_en <= 1'b1;     //AC write data to bus
+            //     R_read_en  <= 1'b0;
+            //     DM_read_en <= 1'b0;
+            //     IM_read_en <= 1'b0;     
+
+            //     PC_write_en <= 1'b0;
+            //     AR_write_en <= 1'b0;
+            //     IR_write_en <= 1'b0;
+            //     AC_write_en <= 1'b0;
+            //     R_write_en  <= 1'b0;
+            //     DM_write_en <= 1'b0;
+            //     DR_write_en <= 1'b0;
+            //     IM_write_en <= 1'b0;
+
+            //     PC_inc_en <= 1'b0;      
+            //     AC_inc_en <= 1'b0;
+
+            //      <= 1'b0;
+            //     ALU_write_en       <= 1'b0;
+                
+            //      <= 1'b0;
+
+            //     state <= stac3;
+            // end
+
+            // stac3: begin
+            //     alu_op   <= 3'd0;
+
+            //     PC_read_en <= 1'b0;
+            //     AR_read_en <= 1'b1;     //AC write data to bus
+            //     IR_read_en <= 1'b0;
+            //     AC_read_en <= 1'b0;
+            //     R_read_en  <= 1'b0;
+            //     DM_read_en <= 1'b0;
+            //     IM_read_en <= 1'b0;     
+
+            //     PC_write_en <= 1'b0;
+            //     AR_write_en <= 1'b0;
+            //     IR_write_en <= 1'b0;
+            //     AC_write_en <= 1'b0;
+            //     R_write_en  <= 1'b0;
+            //     DM_write_en <= 1'b1;
+            //     DR_write_en <= 1'b0;
+            //     IM_write_en <= 1'b0;
+
+            //     PC_inc_en <= 1'b0;      
+            //     AC_inc_en <= 1'b0;
+
+            //      <= 1'b0;
+            //     ALU_write_en       <= 1'b0;
+                
+            //      <= 1'b0;
+                
+            //     state <= fetch1;
+            // end
 
             mvac1: begin
                 alu_op   <= 3'd0;
@@ -593,7 +579,7 @@ module control_unit(
                 PC_read_en <= 1'b0;
                 AR_read_en <= 1'b0;
                 IR_read_en <= 1'b0;
-                AC_read_en <= 1'b0;
+                AC_read_en <= 1'b1;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
                 IM_read_en <= 1'b0;
@@ -602,18 +588,16 @@ module control_unit(
                 AR_write_en <= 1'b0;
                 IR_write_en <= 1'b0;
                 AC_write_en <= 1'b0;
-                R_write_en  <= 1'b0;
+                R_write_en  <= 1'b1;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b0;
-                
-                AC_to_R_en <= 1'b1;
 
                 state <= fetch1;
             end
@@ -643,16 +627,14 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b1;
-             
-                AC_to_R_en <= 1'b0;
 
                 state <= add2;
             end
@@ -674,16 +656,14 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b1;
-                ALU_write_en       <= 1'b0;
-             
-                AC_to_R_en <= 1'b0;
 
                 state <= fetch1;
             end
@@ -720,21 +700,92 @@ module control_unit(
             //     state <= fetch1;
             // end
 
-            // inac1: begin
-            //     read_en  <= 16'b0000000000000000;       
-            //     write_en <= 16'b0000000000000000;
-            //     inc_en   <= 16'b0000000000000000;
-            //     alu_op   <= 3'd0;
-            //     state <= fetch1;
-            // end
+            inac1: begin
+                alu_op   <= 3'd0;
 
-            // sub1: begin
-            //     read_en  <= 16'b0000000000000000;       
-            //     write_en <= 16'b0000000000000000;
-            //     inc_en   <= 16'b0000000000000000;
-            //     alu_op   <= 3'd0;
-            //     state <= fetch1;
-            // end
+                PC_read_en <= 1'b0;
+                AR_read_en <= 1'b0;
+                IR_read_en <= 1'b0;
+                AC_read_en <= 1'b0;
+                R_read_en  <= 1'b0;
+                DM_read_en <= 1'b0;
+                IM_read_en <= 1'b0;
+
+                PC_write_en <= 1'b0;
+                AR_write_en <= 1'b0;
+                IR_write_en <= 1'b0;
+                AC_write_en <= 1'b0;
+                R_write_en  <= 1'b0;
+                DM_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
+                IM_write_en <= 1'b0;
+
+                PC_inc_en <= 1'b0;
+                AC_inc_en <= 1'b1;      //AC = AC+1
+
+                AC_clear_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b0;
+
+                state <= fetch1;
+            end
+
+            sub1: begin
+               alu_op   <= 3'd2;
+
+                PC_read_en <= 1'b0;
+                AR_read_en <= 1'b0;
+                IR_read_en <= 1'b0;
+                AC_read_en <= 1'b0;
+                R_read_en  <= 1'b0;
+                DM_read_en <= 1'b0;
+                IM_read_en <= 1'b0;
+
+                PC_write_en <= 1'b0;
+                AR_write_en <= 1'b0;
+                IR_write_en <= 1'b0;
+                AC_write_en <= 1'b0;
+                R_write_en  <= 1'b0;
+                DM_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
+                IM_write_en <= 1'b0;
+
+                PC_inc_en <= 1'b0;
+                AC_inc_en <= 1'b0;
+
+                AC_clear_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b0;
+
+                state <= sub2;
+            end
+
+            sub2: begin
+               alu_op   <= 3'd0;
+
+                PC_read_en <= 1'b0;
+                AR_read_en <= 1'b0;
+                IR_read_en <= 1'b0;
+                AC_read_en <= 1'b0;
+                R_read_en  <= 1'b0;
+                DM_read_en <= 1'b0;
+                IM_read_en <= 1'b0;
+
+                PC_write_en <= 1'b0;
+                AR_write_en <= 1'b0;
+                IR_write_en <= 1'b0;
+                AC_write_en <= 1'b0;
+                R_write_en  <= 1'b0;
+                DM_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
+                IM_write_en <= 1'b0;
+
+                PC_inc_en <= 1'b0;
+                AC_inc_en <= 1'b0;
+
+                AC_clear_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b1;
+
+                state <= fetch1;
+            end
 
             mul1: begin
                alu_op   <= 3'd3;
@@ -753,16 +804,14 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
-                ALU_write_en       <= 1'b1;
-             
-                AC_to_R_en <= 1'b0;
 
                 state <= mul2;
             end
@@ -784,16 +833,14 @@ module control_unit(
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
-                DM_addr_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
                 IM_write_en <= 1'b0;
 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
 
+                AC_clear_en <= 1'b0;
                 ALU_to_AC_write_en <= 1'b1;
-                ALU_write_en       <= 1'b0;
-             
-                AC_to_R_en <= 1'b0;
 
                 state <= fetch1;
             end
@@ -830,30 +877,189 @@ module control_unit(
             //     state <= fetch1;
             // end
 
-            // clac1: begin
-            //     read_en  <= 16'b0000000000000000;       
-            //     write_en <= 16'b0000000000000000;
-            //     inc_en   <= 16'b0000000000000000;
+            clac1: begin
+                alu_op   <= 3'd0;
+
+                PC_read_en <= 1'b0;
+                AR_read_en <= 1'b0;
+                IR_read_en <= 1'b0;
+                AC_read_en <= 1'b0;
+                R_read_en  <= 1'b0;
+                DM_read_en <= 1'b0;
+                IM_read_en <= 1'b0;
+
+                PC_write_en <= 1'b0;
+                AR_write_en <= 1'b0;
+                IR_write_en <= 1'b0;
+                AC_write_en <= 1'b0;
+                R_write_en  <= 1'b0;
+                DM_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
+                IM_write_en <= 1'b0;
+
+                PC_inc_en <= 1'b0;
+                AC_inc_en <= 1'b0;
+
+                AC_clear_en <= 1'b1;
+                ALU_to_AC_write_en <= 1'b0;
+
+                state <= fetch1;
+            end
+
+            jpnz1: begin   //35
+                if (z==1) begin
+                    alu_op   <= 3'd0;
+
+                    PC_read_en <= 1'b0;
+                    AR_read_en <= 1'b0;
+                    IR_read_en <= 1'b0;
+                    AC_read_en <= 1'b0;
+                    R_read_en  <= 1'b0;
+                    DM_read_en <= 1'b0;
+                    IM_read_en <= 1'b0;
+
+                    PC_write_en <= 1'b0;
+                    AR_write_en <= 1'b0;
+                    IR_write_en <= 1'b0;
+                    AC_write_en <= 1'b0;
+                    R_write_en  <= 1'b0;
+                    DM_write_en <= 1'b0;
+                    DR_write_en <= 1'b0;
+                    IM_write_en <= 1'b0;
+
+                    PC_inc_en <= 1'b1;
+                    AC_inc_en <= 1'b0;
+
+                    AC_clear_en <= 1'b0;
+                    ALU_to_AC_write_en <= 1'b0;
+
+                    state <= jpnzx;
+                end
+
+                
+                else begin
+                    alu_op   <= 3'd0;
+
+                    PC_read_en <= 1'b0;
+                    AR_read_en <= 1'b1;
+                    IR_read_en <= 1'b0;
+                    AC_read_en <= 1'b0;
+                    R_read_en  <= 1'b0;
+                    DM_read_en <= 1'b0;
+                    IM_read_en <= 1'b0;     
+
+                    PC_write_en <= 1'b1;
+                    AR_write_en <= 1'b0;
+                    IR_write_en <= 1'b0;
+                    AC_write_en <= 1'b0;
+                    R_write_en  <= 1'b0;
+                    DM_write_en <= 1'b0;
+                    DR_write_en <= 1'b0;
+                    IM_write_en <= 1'b0;
+
+                    PC_inc_en <= 1'b0;
+                    AC_inc_en <= 1'b0;
+
+                    AC_clear_en <= 1'b0;
+                    ALU_to_AC_write_en <= 1'b0;
+
+                    state <= jpnz2;
+                    
+                end
+            end
+
+            jpnzx: begin
+                    alu_op   <= 3'd0;
+
+                    PC_read_en <= 1'b0;
+                    AR_read_en <= 1'b0;
+                    IR_read_en <= 1'b0;
+                    AC_read_en <= 1'b0;
+                    R_read_en  <= 1'b0;
+                    DM_read_en <= 1'b0;
+                    IM_read_en <= 1'b0;
+
+                    PC_write_en <= 1'b0;
+                    AR_write_en <= 1'b0;
+                    IR_write_en <= 1'b0;
+                    AC_write_en <= 1'b0;
+                    R_write_en  <= 1'b0;
+                    DM_write_en <= 1'b0;
+                    DR_write_en <= 1'b0;
+                    IM_write_en <= 1'b0;
+
+                    PC_inc_en <= 1'b0;
+                    AC_inc_en <= 1'b0;
+
+                    AC_clear_en <= 1'b0;
+                    ALU_to_AC_write_en <= 1'b0;
+
+                    state <= fetch1;
+                end
+
+
+            jpnz2: begin
+                alu_op   <= 3'd0;
+
+                PC_read_en <= 1'b0;
+                AR_read_en <= 1'b0;
+                IR_read_en <= 1'b0;
+                AC_read_en <= 1'b0;
+                R_read_en  <= 1'b0;
+                DM_read_en <= 1'b0;
+                IM_read_en <= 1'b0;     
+
+                PC_write_en <= 1'b0;  //Bus write to PC
+                AR_write_en <= 1'b0;
+                IR_write_en <= 1'b0;
+                AC_write_en <= 1'b0;
+                R_write_en  <= 1'b0;
+                DM_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
+                IM_write_en <= 1'b0;
+
+                PC_inc_en <= 1'b0;
+                AC_inc_en <= 1'b0;
+
+                AC_clear_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b0;
+
+                state <= fetch1;
+                
+            end
+
+            // jpnz3: begin
             //     alu_op   <= 3'd0;
+
+            //     PC_read_en <= 1'b0;
+            //     AR_read_en <= 1'b0;
+            //     IR_read_en <= 1'b0;
+            //     AC_read_en <= 1'b0;
+            //     R_read_en  <= 1'b0;
+            //     DM_read_en <= 1'b0;
+            //     IM_read_en <= 1'b0;     
+
+            //     PC_write_en <= 1'b0;  
+            //     AR_write_en <= 1'b0;
+            //     IR_write_en <= 1'b0;
+            //     AC_write_en <= 1'b0;
+            //     R_write_en  <= 1'b0;
+            //     DM_write_en <= 1'b0;
+            //     DR_write_en <= 1'b0;
+            //     IM_write_en <= 1'b0;
+
+            //     PC_inc_en <= 1'b0;
+            //     AC_inc_en <= 1'b0;
+
+            //     AC_clear_en <= 1'b0;
+            //     ALU_to_AC_write_en <= 1'b0;
+
             //     state <= fetch1;
+                
             // end
 
-            // jump1: begin
-            //     read_en  <= 16'b0000000000000000;       
-            //     write_en <= 16'b0000000000000000;
-            //     inc_en   <= 16'b0000000000000000;
-            //     alu_op   <= 3'd0;
-            //     state <= jump2;
-            // end
 
-            // jump2: begin
-            //     read_en  <= 16'b0000000000000000;       
-            //     write_en <= 16'b0000000000000000;
-            //     inc_en   <= 16'b0000000000000000;
-            //     alu_op   <= 3'd0;
-            //     state <= fetch1;
-            // end
-
+        
             // jmpz: begin                             //Check State Machine
             //     read_en  <= 16'b0000000000000000;       
             //     write_en <= 16'b0000000000000000;
@@ -882,13 +1088,35 @@ module control_unit(
             //     state <= fetch1;
             // end
 
-            // endop : begin
-            //     read_en  <= 16'b0000000000000000;       
-            //     write_en <= 16'b0000000000000000;
-            //     inc_en   <= 16'b0000000000000000;
-            //     alu_op   <= 3'd0;
-            //     state <= endop;
-            // end
+            endop : begin
+                end_process <= 1'b1;
+                alu_op   <= 3'd0;
+
+                PC_read_en <= 1'b0;
+                AR_read_en <= 1'b0;
+                IR_read_en <= 1'b0;
+                AC_read_en <= 1'b0;
+                R_read_en  <= 1'b0;
+                DM_read_en <= 1'b0;
+                IM_read_en <= 1'b0;
+
+                PC_write_en <= 1'b0;
+                AR_write_en <= 1'b0;
+                IR_write_en <= 1'b0;
+                AC_write_en <= 1'b0;
+                R_write_en  <= 1'b0;
+                DM_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
+                IM_write_en <= 1'b0;
+
+                PC_inc_en <= 1'b0;
+                AC_inc_en <= 1'b0;
+
+                AC_clear_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b0;
+
+                state <= endop;
+            end
 
             // default: begin
             //     read_en  <= 16'b0000000000000000;       
