@@ -9,11 +9,12 @@ module DRAM (
     reg [15:0] ram [65535:0];
 
     initial begin
-        ram[65402] = 16'd5;
-        ram[26] =16'd8;
-        ram[40] = 16'd23;
-        ram[130] = 16'd46;
-        ram[135] = 16'd85;
+        ram[5]  = 16'd75;
+        ram[10] = 16'd85;
+        ram[15] = 16'd95;
+        ram[75] = 16'd91;
+        ram[85] = 16'd101;
+        ram[95] = 16'd111;
     end
 
 
