@@ -1441,7 +1441,7 @@ module control_unit(
                 PC_read_en <= 1'b0;
                 AR_read_en <= 1'b0;
                 IR_read_en <= 1'b0;
-                AC_read_en <= 1'b1;
+                AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
                 DM_read_en <= 1'b0;
                 DR_read_en <= 1'b1;
@@ -1451,7 +1451,7 @@ module control_unit(
                 C_read_en  <= 1'b0;
 
                 PC_write_en <= 1'b0;
-                AR_write_en <= 1'b1;
+                AR_write_en <= 1'b0;
                 IR_write_en <= 1'b0;
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
