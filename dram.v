@@ -20,7 +20,7 @@ module DRAM (
         ram[8] = 0;
         ram[9] = 0;
         ram[10] = 0;
-        ram[11] = 26;
+        ram[11] = 0;
         ram[12] = 2;
         ram[13] = 5;
         ram[14] = 7;
