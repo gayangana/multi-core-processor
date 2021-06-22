@@ -12,6 +12,10 @@ module processor(
     wire DM_read_en;
     wire IM_read_en;
     wire DR_read_en;
+    wire A_read_en;
+    wire B_read_en;
+    wire C_read_en;
+    
 
     wire PC_write_en;
     wire AR_write_en;
@@ -21,6 +25,9 @@ module processor(
     wire DM_write_en;
     wire DR_write_en;
     wire IM_write_en;
+    wire A_write_en;
+    wire B_write_en;
+    wire C_write_en;
 
     wire PC_inc_en;
     wire AC_inc_en;
@@ -48,6 +55,9 @@ module processor(
     wire [15:0]DM_out;
     wire [15:0]IM_out;
     wire [15:0]DR_out;
+    wire [15:0]A_out;
+    wire [15:0]B_out;
+    wire [15:0]C_out;
 
     register IR(
         //inputs
@@ -113,6 +123,30 @@ module processor(
         .data_out(R_out)
     );
 
+    regR A(
+        .clk(clk),
+        .write_en(A_write_en),
+        .data_in(bus),
+        //
+        .data_out(A_out)
+    );
+
+    regR B(
+        .clk(clk),
+        .write_en(B_write_en),
+        .data_in(bus),
+        //
+        .data_out(B_out)
+    );
+
+    regR C(
+        .clk(clk),
+        .write_en(C_write_en),
+        .data_in(bus),
+        //
+        .data_out(C_out)
+    );
+
     ALU alu(
         .i_clk(clk),
         .i_in1(R_out),
@@ -143,6 +177,9 @@ module processor(
         .IM_read_en(IM_read_en), 
 		.IR_read_en(IR_read_en),
         .DR_read_en(DR_read_en),
+        .A_read_en(A_read_en),
+        .B_read_en(B_read_en),
+        .C_read_en(C_read_en),
 
         .PC_write_en(PC_write_en), 
         .AR_write_en(AR_write_en), 
@@ -152,6 +189,9 @@ module processor(
         .DM_write_en(DM_write_en),
         .DR_write_en(DR_write_en), 
         .IM_write_en(IM_write_en), 
+        .A_write_en(A_write_en),
+        .B_write_en(B_write_en),
+        .C_write_en(C_write_en),
 
         .PC_inc_en(PC_inc_en),
         .AC_inc_en(AC_inc_en),
@@ -169,13 +209,19 @@ module processor(
         .DM_out(DM_out),
         .IM_out(IM_out),
 		.DR_out(DR_out),
+        .A_out(A_out),
+        .B_out(B_out),
+        .C_out(C_out),
         .PC_read_en(PC_read_en),
         .AR_read_en(AR_read_en),
         .AC_read_en(AC_read_en),
         .R_read_en(R_read_en),
         .IM_read_en(IM_read_en),
         .DM_read_en(DM_read_en),
-        .DR_read_en(DR_read_en),
+        .DR_read_en(DR_read_en), 
+		.A_read_en(A_read_en),
+		.B_read_en(B_read_en),
+		.C_read_en(C_read_en),
         //output
         .bus(bus)
     );
