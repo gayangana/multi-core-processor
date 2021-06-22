@@ -1,8 +1,16 @@
 module processor(
     input clk,
-    output end_process,
-    input [1:0]status
+    input [1:0]status,
+    input [15:0] DM_out,
+    input [15:0] IM_out,
+
+    output reg [15:0]bus,
+    output reg [15:0]AR_out,
+    output reg [15:0]PC_out,
+    output reg DM_write_en,
+    output reg end_process
 );
+
 
     wire PC_read_en;
     wire AR_read_en; 
@@ -22,7 +30,7 @@ module processor(
     wire IR_write_en;
     wire AC_write_en;
     wire R_write_en;
-    wire DM_write_en;
+    //wire DM_write_en;
     wire DR_write_en;
     wire IM_write_en;
     wire A_write_en;
@@ -46,9 +54,9 @@ module processor(
 
     wire [15:0]instruction;
 
-    wire [15:0]bus;
-    wire [15:0]PC_out;
-    wire [15:0]AR_out;
+    //wire [15:0]bus;
+    //wire [15:0]PC_out;
+    //wire [15:0]AR_out;
     wire [15:0]IR_out;
     wire [15:0]AC_out;
     wire [15:0]R_out;
@@ -226,24 +234,6 @@ module processor(
         .bus(bus)
     );
 
-    
 
-    
-
-    DRAM data_mem(
-        .clk(clk),
-        .write_en(DM_write_en),	
-        .addr(AR_out),
-        .data_in(bus),
-        .data_out(DM_out)
-    );
-
-    IRAM instr_mem(
-        .clk(clk),
-        .data_in(bus),
-        .addr(PC_out),
-        //output
-        .data_out(IM_out)
-    );
 
 endmodule

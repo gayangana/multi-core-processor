@@ -32,6 +32,20 @@ module IRAM (
     parameter STC   = 16'd63;
 
     initial begin
+
+        
+        // ram[0] = LDAC;
+        // ram[1] = 16'd5;
+        // ram[2] = MVACR;  //TOTAL
+        // ram[3] = LDAC;
+        // ram[4] = 16'd10;
+        // ram[5] = MUL;
+        // ram[6] = STAC;
+        // ram[7] = 16'd65400;
+        // ram[8] = ENDOP;
+
+
+
         //assmebly code
         ram[0] = CLAC;
         ram[1] = STAC;
@@ -181,15 +195,6 @@ module IRAM (
         // ram[25]= ENDOP;
         //...
 
-        // ram[0] = LDAC;
-        // ram[1] = 16'd5;
-        // ram[2] = MVACR;  //TOTAL
-        // ram[3] = LDAC;
-        // ram[4] = 16'd10;
-        // ram[5] = MUL;
-        // ram[6] = STAC;
-        // ram[7] = 16'd65400;
-        // ram[8] = ENDOP;
         
     end
 
