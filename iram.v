@@ -44,8 +44,6 @@ module IRAM (
         // ram[7] = 16'd65400;
         // ram[8] = ENDOP;
 
-
-
         //assmebly code
         ram[0] = CLAC;
         ram[1] = STAC;

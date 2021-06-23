@@ -10,21 +10,33 @@ module top_tb();
     wire end_p;
 
 
+    integer data_file;
+    integer scan_file;
+
 
     initial begin
         clk = 1'b0;
-        status = 2'b01;
-        com_data_in = 16'b0;
-        com_addr = 16'b0;
-        com_wr_en = 1'b0; 
+        status = 2'b00;
+        //com_data_in = 16'b0;
+        com_addr = 16'd65535;
+        com_wr_en = 1'b1;
+        data_file =$fopen("memory.txt","r");  
     end
 
     always #(5) clk <= ~clk;   
 
 
-    initial begin
-        @(posedge clk)
-        status <= 2'b01;
+		
+    always @(posedge clk) begin
+        scan_file = $fscanf(data_file, "%d\n", com_data_in); 
+        if (!$feof(data_file)) begin 
+			com_addr <= com_addr + 1'b1;
+		end
+		else begin
+			com_addr <= com_addr +1'b1;
+            status <= 2'b01;	 
+			com_wr_en <= 1'b0 ;
+        end
     end
 		
 	top top1(	  
