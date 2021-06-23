@@ -5,7 +5,8 @@ module top(
     input [15:0]com_addr,
     input com_wr_en,
 
-    output reg end_process
+    output reg end_process,
+    output reg[15:0]com_data_out
 );
 
     wire [15:0] DM_data_in;
@@ -20,11 +21,13 @@ module top(
     wire [15:0] IM_out;
     wire [15:0] DM_out;
 
+    wire [15:0]proc_data_out;
+
     processor core1 (
         //inputs
         .clk(clk),
         .status(status),
-        .DM_out(DM_out),
+        .DM_out(proc_data_out),
         .IM_out(IM_out),
         //outputs
         .bus(bus),
@@ -45,10 +48,13 @@ module top(
         .proc_bus(bus),
         .proc_addr(proc_addr),
         .proc_wr_en(proc_write_en),
+        .DM_out(DM_out),
         //outputs
         .DM_data_in(DM_data_in),
         .DM_addr(DM_addr),
-        .DM_write_en(DM_write_en)
+        .DM_write_en(DM_write_en),
+        .proc_data_out(proc_data_out),
+        .com_data_out(com_data_out)
     );
 
     DRAM data_mem(
