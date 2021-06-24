@@ -122,34 +122,34 @@ module processor(
     );
 
 
-    regR R(
+    register R(
         //inputs
         .clk(clk),
-        .write_en(R_write_en),
+        .reg_write_en(R_write_en),
         .data_in(bus),
         //
         .data_out(R_out)
     );
 
-    regR A(
+    register A(
         .clk(clk),
-        .write_en(A_write_en),
+        .reg_write_en(A_write_en),
         .data_in(bus),
         //
         .data_out(A_out)
     );
 
-    regR B(
+    register B(
         .clk(clk),
-        .write_en(B_write_en),
+        .reg_write_en(B_write_en),
         .data_in(bus),
         //
         .data_out(B_out)
     );
 
-    regR C(
+    register C(
         .clk(clk),
-        .write_en(C_write_en),
+        .reg_write_en(C_write_en),
         .data_in(bus),
         //
         .data_out(C_out)
