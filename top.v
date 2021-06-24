@@ -5,8 +5,8 @@ module top(
     input [15:0]com_addr,
     input com_wr_en,
 
-    output reg end_process,
-    output reg[15:0]com_data_out
+    output end_process,
+    output [15:0]com_data_out
 );
 
     wire [15:0] DM_data_in;

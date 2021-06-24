@@ -9,7 +9,7 @@ module DRAM (
     reg [15:0] ram [65535:0];
 
     initial begin
-        //ram[5] = 16'd100;
+        ram[65402] = 16'd5;
         //ram[10]= 16'd85;
 
         // ram[0] = 3;

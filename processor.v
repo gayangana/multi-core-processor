@@ -4,11 +4,11 @@ module processor(
     input [15:0] DM_out,
     input [15:0] IM_out,
 
-    output reg [15:0]bus,
-    output reg [15:0]AR_out,
-    output reg [15:0]PC_out,
-    output reg DM_write_en,
-    output reg end_process
+    output  [15:0]bus,
+    output  [15:0]AR_out,
+    output  [15:0]PC_out,
+    output  DM_write_en,
+    output  end_process
 );
 
 
@@ -60,8 +60,8 @@ module processor(
     wire [15:0]IR_out;
     wire [15:0]AC_out;
     wire [15:0]R_out;
-    wire [15:0]DM_out;
-    wire [15:0]IM_out;
+    //wire [15:0]DM_out;
+    //wire [15:0]IM_out;
     wire [15:0]DR_out;
     wire [15:0]A_out;
     wire [15:0]B_out;
