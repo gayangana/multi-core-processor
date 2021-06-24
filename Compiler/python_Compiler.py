@@ -34,7 +34,7 @@ try:
             for i in range(D1):
                 matC += [[0]*D3]
 
-            memory += [D1,D2,D3,12,12+D1*D2,12+D1*D2+D2*D3,0,0,0,0,0,0] + matrixA + matrixB + matrixC
+            memory += [D1,D2,D3,12,12+D1*D2,12+D1*D2+D2*D3,0,0,0,0,0,0] + matrixA + matrixB + matrixC +  [0]
 
             memory_file = open("memory.txt","w")
             memory_file.writelines(["%s\n" % item for item in memory])
