@@ -3,8 +3,8 @@ wave.asdbw/
 wave.asdb
 
 # I/O
-memory.txt
-out.txt
+# memory.txt
+# out.txt
 
 # ModelSim
 work/
