@@ -1,9 +1,14 @@
+# Active HDL
 wave.asdbw/
 wave.asdb
-memory.txt
-out.txt
-bus.v.bak
-processor.v.bak
-selector.v.bak
-top.v.bak
-decoder.v
+
+# I/O
+# memory.txt
+# out.txt
+
+# ModelSim
+work/
+*.mti
+*.mpf
+*.wlf
+transcript
