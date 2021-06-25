@@ -2,3 +2,8 @@ wave.asdbw/
 wave.asdb
 memory.txt
 out.txt
+bus.v.bak
+processor.v.bak
+selector.v.bak
+top.v.bak
+decoder.v

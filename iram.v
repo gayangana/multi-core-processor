@@ -35,10 +35,10 @@ module IRAM (
 
         
         // ram[0] = LDAC;
-        // ram[1] = 16'd5;
+        // ram[1] = 16'd2;
         // ram[2] = MVACR;  //TOTAL
         // ram[3] = LDAC;
-        // ram[4] = 16'd10;
+        // ram[4] = 16'd4;
         // ram[5] = MUL;
         // ram[6] = STAC;
         // ram[7] = 16'd65400;
@@ -149,15 +149,15 @@ module IRAM (
 
 
         // ram[0] = LDA;
-        // ram[1] = 16'd5;
+        // ram[1] = 16'd2;
         // ram[2] = MVA;
         // ram[3] = LDB;
-        // ram[4] = 16'd10;
+        // ram[4] = 16'd4;
         // ram[5] = MVB;
         // ram[6] = LDC;
-        // ram[7] = 16'd15;
+        // ram[7] = 16'd6;
         // ram[8] = STC;
-        // ram[9] = 16'd25;
+        // ram[9] = 16'd8;
         // ram[10] = LDAC;
         // ram[11] = 16'd5;
         // ram[12] = ENDOP;

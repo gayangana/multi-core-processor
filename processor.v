@@ -4,11 +4,11 @@ module processor(
     input [15:0] DM_out,
     input [15:0] IM_out,
 
-    output reg [15:0]bus,
-    output reg [15:0]AR_out,
-    output reg [15:0]PC_out,
-    output reg DM_write_en,
-    output reg end_process
+    output  [15:0]bus,
+    output  [15:0]AR_out,
+    output  [15:0]PC_out,
+    output  DM_write_en,
+    output  end_process
 );
 
 
@@ -60,8 +60,8 @@ module processor(
     wire [15:0]IR_out;
     wire [15:0]AC_out;
     wire [15:0]R_out;
-    wire [15:0]DM_out;
-    wire [15:0]IM_out;
+    //wire [15:0]DM_out;
+    //wire [15:0]IM_out;
     wire [15:0]DR_out;
     wire [15:0]A_out;
     wire [15:0]B_out;
@@ -122,34 +122,34 @@ module processor(
     );
 
 
-    regR R(
+    register R(
         //inputs
         .clk(clk),
-        .write_en(R_write_en),
+        .reg_write_en(R_write_en),
         .data_in(bus),
         //
         .data_out(R_out)
     );
 
-    regR A(
+    register A(
         .clk(clk),
-        .write_en(A_write_en),
+        .reg_write_en(A_write_en),
         .data_in(bus),
         //
         .data_out(A_out)
     );
 
-    regR B(
+    register B(
         .clk(clk),
-        .write_en(B_write_en),
+        .reg_write_en(B_write_en),
         .data_in(bus),
         //
         .data_out(B_out)
     );
 
-    regR C(
+    register C(
         .clk(clk),
-        .write_en(C_write_en),
+        .reg_write_en(C_write_en),
         .data_in(bus),
         //
         .data_out(C_out)
