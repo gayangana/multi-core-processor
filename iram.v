@@ -39,7 +39,7 @@ module IRAM (
         // ram[2] = MVACR;  //TOTAL
         // ram[3] = LDAC;
         // ram[4] = 16'd4;
-        // ram[5] = MUL;
+        // ram[5] = MOD;
         // ram[6] = STAC;
         // ram[7] = 16'd65400;
         // ram[8] = ENDOP;
