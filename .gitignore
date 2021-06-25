@@ -12,3 +12,8 @@ work/
 *.mpf
 *.wlf
 transcript
+bus.v.bak
+top.v.bak
+selector.v.bak
+processor.v.bak
+decoder.v

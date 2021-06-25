@@ -46,93 +46,75 @@ module control_unit(
     fetch2 = 16'd2,
     fetch3 = 16'd3,
 	fetch4 = 16'd4,
-    fetch5 = 16'd5,
-    fetch6 = 16'd6,
 
-    ldac1 = 16'd7,
-    ldacx = 16'd8,
-    ldac2 = 16'd9,
-    ldac3 = 16'd10,
+    ldac1 = 16'd5,
+    ldac2 = 16'd6,
 
+    stac1 = 16'd7,
+    stac2 = 16'd8,
 
-    stac1 = 16'd11,
-    stacx = 16'd12,
-    stac2 = 16'd13,
-    stac3 = 16'd14,
-    
+    lda1 = 16'd9,
+    lda2 = 16'd10,
+    lda3 = 16'd11,
+    lda4 = 16'd12,
+    lda5 = 16'd13,
+  
+    ldb1 = 16'd14,
+    ldb2 = 16'd15,
+    ldb3 = 16'd16,
+    ldb4 = 16'd17,
+    ldb5 = 16'd18,
+ 
+    ldc1 = 16'd19,
+    ldc2 = 16'd20,
+    ldc3 = 16'd21,
+    ldc4 = 16'd22,
+    ldc5 = 16'd23,
 
-    mvacr1 = 16'd15,
-    mvacc1 = 16'd44,
+    stc1 = 16'd24,
+    stc2 = 16'd25,
+    stc3 = 16'd26,
+    stc4 = 16'd27,
+    stc5 = 16'd28,
 
-    mva1 = 16'd16,
-    mvb1 = 16'd42,
-    mvc1 = 16'd43,
+    mvacr1 = 16'd29,
 
-    add1 = 16'd17,
-	add2 = 16'd18,
+    mvacc1 = 16'd30,
 
-    addm1 = 16'd19,
-    addm2 = 16'd20,
-    addm3 = 16'd21,
-    addm4 = 16'd22,
+    mva1 = 16'd31,
 
-    inac1 = 16'd23,
+    mvb1 = 16'd32,
 
-    sub1 = 16'd24,
-    sub2 = 16'd25,
+    mvc1 = 16'd33,
 
-    mul1 = 16'd26,
-    mul2 = 16'd27,
+    inac1 = 16'd34,
 
-    mulm1 = 16'd28,
-    mulm2 = 16'd29,
-    mulm3 = 16'd30,
-    mulm4 = 16'd31,
+    clac1 = 16'd35,
 
-    clac1 = 16'd32,
+    add1 = 16'd36,
+	add2 = 16'd37,
 
-    jump1 = 16'd33,
-    jump2 = 16'd34,
+    sub1 = 16'd38,
+    sub2 = 16'd39,
 
-    jpnz1 = 16'd35,
-	jpnz2 = 16'd36,
-    jpnz3 = 16'd37,
-    jpnz4 = 16'd38,
-    jpnzx = 16'd39,
+    mul1 = 16'd40,
+    mul2 = 16'd41,
 
-    lda1 = 16'd45,
-    lda2 = 16'd46,
-    lda3 = 16'd47,
-    lda4 = 16'd48,
-    lda5 = 16'd49,
-    lda6 = 16'd50,
-    ldax = 16'd75,
+    div1 = 16'd42,
+    div2 = 16'd43,
 
-    ldb1 = 16'd51,
-    ldb2 = 16'd52,
-    ldb3 = 16'd53,
-    ldb4 = 16'd54,
-    ldb5 = 16'd55,
-    ldb6 = 16'd56,
-     ldbx = 16'd76,
+    mod1 = 16'd44,
+    mod2 = 16'd45,
 
-    ldc1 = 16'd57,
-    ldc2 = 16'd58,
-    ldc3 = 16'd59,
-    ldc4 = 16'd60,
-    ldc5 = 16'd61,
-    ldc6 = 16'd62,
-    ldcx = 16'd77,
+    jump1 = 16'd46,
+    jump2 = 16'd47,
 
-    stc1 = 16'd63,
-    stc2 = 16'd64,
-    stc3 = 16'd65,
-    stc4 = 16'd66,
-    stc5 = 16'd67,
-    stc6 = 16'd68,
+    jpnz1 = 16'd48,
+	jpnz2 = 16'd49,
 
-    endop = 16'd40,
-    no_op = 16'd41;
+    no_op = 16'd50,
+
+    endop = 16'd51;
 
     
 
@@ -2126,7 +2108,7 @@ module control_unit(
                     AC_clear_en <= 1'b0;
                     ALU_to_AC_write_en <= 1'b0;
 
-                    state <= jpnzx;
+                    state <= jpnz2;
                 end
 
                 
@@ -2167,40 +2149,40 @@ module control_unit(
                 end
             end
 
-            jpnzx: begin
-                    alu_op   <= 3'd0;
+            // jpnzx: begin
+            //         alu_op   <= 3'd0;
 
-                    PC_read_en <= 1'b0;
-                    AR_read_en <= 1'b0;
-                    IR_read_en <= 1'b0;
-                    AC_read_en <= 1'b0;
-                    R_read_en  <= 1'b0;
-                    DM_read_en <= 1'b0;
-                    IM_read_en <= 1'b0;
-                    A_read_en  <= 1'b0;
-                    B_read_en  <= 1'b0;
-                    C_read_en  <= 1'b0;
+            //         PC_read_en <= 1'b0;
+            //         AR_read_en <= 1'b0;
+            //         IR_read_en <= 1'b0;
+            //         AC_read_en <= 1'b0;
+            //         R_read_en  <= 1'b0;
+            //         DM_read_en <= 1'b0;
+            //         IM_read_en <= 1'b0;
+            //         A_read_en  <= 1'b0;
+            //         B_read_en  <= 1'b0;
+            //         C_read_en  <= 1'b0;
 
-                    PC_write_en <= 1'b0;
-                    AR_write_en <= 1'b0;
-                    IR_write_en <= 1'b0;
-                    AC_write_en <= 1'b0;
-                    R_write_en  <= 1'b0;
-                    DM_write_en <= 1'b0;
-                    DR_write_en <= 1'b0;
-                    IM_write_en <= 1'b0;
-                    A_write_en  <= 1'b0;
-                    B_write_en  <= 1'b0;
-                    C_write_en  <= 1'b0;
+            //         PC_write_en <= 1'b0;
+            //         AR_write_en <= 1'b0;
+            //         IR_write_en <= 1'b0;
+            //         AC_write_en <= 1'b0;
+            //         R_write_en  <= 1'b0;
+            //         DM_write_en <= 1'b0;
+            //         DR_write_en <= 1'b0;
+            //         IM_write_en <= 1'b0;
+            //         A_write_en  <= 1'b0;
+            //         B_write_en  <= 1'b0;
+            //         C_write_en  <= 1'b0;
 
-                    PC_inc_en <= 1'b0;
-                    AC_inc_en <= 1'b0;
+            //         PC_inc_en <= 1'b0;
+            //         AC_inc_en <= 1'b0;
 
-                    AC_clear_en <= 1'b0;
-                    ALU_to_AC_write_en <= 1'b0;
+            //         AC_clear_en <= 1'b0;
+            //         ALU_to_AC_write_en <= 1'b0;
 
-                    state <= fetch1;
-                end
+            //         state <= fetch1;
+            //     end
 
 
             jpnz2: begin

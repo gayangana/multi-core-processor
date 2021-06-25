@@ -7,29 +7,29 @@ module IRAM (
 
     reg [15:0] ram[65535:0];
 
-    parameter NOP   = 16'd41;
-    parameter LDAC  = 16'd7 ;
-    parameter STAC  = 16'd11 ;
-    parameter MVACR  = 16'd15;
-    parameter MVR   = 16'd16;
-    parameter ADD   = 16'd17;
-    parameter ADDM  = 16'd19;
-    parameter INAC  = 16'd23;
-    parameter SUB   = 16'd24;
-    parameter MUL   = 16'd26;
-    parameter MULM  = 16'd28;
-    parameter CLAC  = 16'd32;
-    parameter JUMP  = 16'd33;
-    parameter JPNZ  = 16'd35;
-    parameter ENDOP = 16'd40;
-    parameter LDA   = 16'd45;
-    parameter LDB   = 16'd51;
-    parameter LDC   = 16'd57;
-    parameter MVA   = 16'd16;
-    parameter MVB   = 16'd42;
-    parameter MVC   = 16'd43;
-    parameter MVACC = 16'd44;
-    parameter STC   = 16'd63;
+    
+    parameter LDAC  = 16'd5 ;
+    parameter STAC  = 16'd7 ;
+    parameter LDA   = 16'd9;
+    parameter LDB   = 16'd14;
+    parameter LDC   = 16'd19;
+    parameter STC   = 16'd24;
+    parameter MVACR = 16'd29;
+    parameter MVACC = 16'd30;
+    parameter MVA   = 16'd31;
+    parameter MVB   = 16'd32;
+    parameter MVC   = 16'd33;
+    parameter INAC  = 16'd34;
+    parameter CLAC  = 16'd35;
+    parameter ADD   = 16'd36;
+    parameter SUB   = 16'd38;
+    parameter MUL   = 16'd40;
+    parameter DIV   = 16'd42;
+    parameter MOD   = 16'd44;
+    parameter JUMP  = 16'd46;
+    parameter JPNZ  = 16'd48;
+    parameter NOP   = 16'd50;
+    parameter ENDOP = 16'd51;
 
     initial begin
 
