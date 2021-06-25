@@ -68,3 +68,4 @@ with open('matCresults.txt', 'w') as f:
     for line in MatrixC1:
         f.write(line)
         f.write('\n')
+        
