@@ -1,8 +1,16 @@
 module processor(
     input clk,
-    output end_process,
-    input [1:0]status
+    input [1:0]status,
+    input [15:0] DM_out,
+    input [15:0] IM_out,
+
+    output  [15:0]bus,
+    output  [15:0]AR_out,
+    output  [15:0]PC_out,
+    output  DM_write_en,
+    output  end_process
 );
+
 
     wire PC_read_en;
     wire AR_read_en; 
@@ -22,7 +30,7 @@ module processor(
     wire IR_write_en;
     wire AC_write_en;
     wire R_write_en;
-    wire DM_write_en;
+    //wire DM_write_en;
     wire DR_write_en;
     wire IM_write_en;
     wire A_write_en;
@@ -46,14 +54,14 @@ module processor(
 
     wire [15:0]instruction;
 
-    wire [15:0]bus;
-    wire [15:0]PC_out;
-    wire [15:0]AR_out;
+    //wire [15:0]bus;
+    //wire [15:0]PC_out;
+    //wire [15:0]AR_out;
     wire [15:0]IR_out;
     wire [15:0]AC_out;
     wire [15:0]R_out;
-    wire [15:0]DM_out;
-    wire [15:0]IM_out;
+    //wire [15:0]DM_out;
+    //wire [15:0]IM_out;
     wire [15:0]DR_out;
     wire [15:0]A_out;
     wire [15:0]B_out;
@@ -114,34 +122,34 @@ module processor(
     );
 
 
-    regR R(
+    register R(
         //inputs
         .clk(clk),
-        .write_en(R_write_en),
+        .reg_write_en(R_write_en),
         .data_in(bus),
         //
         .data_out(R_out)
     );
 
-    regR A(
+    register A(
         .clk(clk),
-        .write_en(A_write_en),
+        .reg_write_en(A_write_en),
         .data_in(bus),
         //
         .data_out(A_out)
     );
 
-    regR B(
+    register B(
         .clk(clk),
-        .write_en(B_write_en),
+        .reg_write_en(B_write_en),
         .data_in(bus),
         //
         .data_out(B_out)
     );
 
-    regR C(
+    register C(
         .clk(clk),
-        .write_en(C_write_en),
+        .reg_write_en(C_write_en),
         .data_in(bus),
         //
         .data_out(C_out)
@@ -226,24 +234,6 @@ module processor(
         .bus(bus)
     );
 
-    
 
-    
-
-    DRAM data_mem(
-        .clk(clk),
-        .write_en(DM_write_en),	
-        .addr(AR_out),
-        .data_in(bus),
-        .data_out(DM_out)
-    );
-
-    IRAM instr_mem(
-        .clk(clk),
-        .data_in(bus),
-        .addr(PC_out),
-        //output
-        .data_out(IM_out)
-    );
 
 endmodule

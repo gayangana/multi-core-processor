@@ -22,26 +22,52 @@ module bus(
         input B_read_en,
         input C_read_en,
         output reg [15:0] bus
-    );
+    );	
+	
+	
 
-    always @(IM_read_en or AR_read_en or DR_read_en or DM_read_en or AC_read_en or R_read_en or A_read_en or B_read_en or C_read_en) begin
+    // always @(*) begin
+    //     if (IM_read_en == 1'b1)
+    //         assign bus = IM_out;
+    //     else if (DR_read_en == 1'b1)
+    //         assign bus = DR_out;
+    //     else if (DM_read_en ==1'b1)
+    //         assign bus = DM_out;
+    //     else if (AC_read_en == 1'b1)
+    //         assign bus = AC_out;
+    //     else if (R_read_en == 1'b1)
+    //         assign bus = R_out;
+    //     else if (AR_read_en == 1'b1)
+    //         assign bus = AR_out;
+    //     else if (A_read_en == 1'b1)
+    //         assign bus = A_out;
+    //     else if (B_read_en == 1'b1)
+    //         assign bus = B_out;
+    //     else if (C_read_en == 1'b1)
+    //         assign bus = C_out;
+    // end
+
+    always @(*) begin
         if (IM_read_en == 1'b1)
-            assign bus = IM_out;
-        if (DR_read_en == 1'b1)
-            assign bus = DR_out;
-        if (DM_read_en ==1'b1)
-            assign bus = DM_out;
-        if (AC_read_en == 1'b1)
-            assign bus = AC_out;
-        if (R_read_en == 1'b1)
-            assign bus = R_out;
-        if (AR_read_en == 1'b1)
-            assign bus = AR_out;
-        if (A_read_en == 1'b1)
-            assign bus = A_out;
-        if (B_read_en == 1'b1)
-            assign bus = B_out;
-        if (C_read_en == 1'b1)
-            assign bus = C_out;
+             bus = IM_out;
+        else if (DR_read_en == 1'b1)
+             bus = DR_out;
+        else if (DM_read_en ==1'b1)
+             bus = DM_out;
+        else if (AC_read_en == 1'b1)
+             bus = AC_out;
+        else if (R_read_en == 1'b1)
+             bus = R_out;
+        else if (AR_read_en == 1'b1)
+             bus = AR_out;
+        else if (A_read_en == 1'b1)
+             bus = A_out;
+        else if (B_read_en == 1'b1)
+             bus = B_out;
+        else if (C_read_en == 1'b1)
+             bus = C_out;
     end
+
+
+
 endmodule
