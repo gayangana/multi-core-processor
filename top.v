@@ -23,7 +23,7 @@ module top(
 
     wire [15:0]proc_data_out;
 
-    processor core1 (
+    processor  #(.cid(16'd0)) core1 (
         //inputs
         .clk(clk),
         .status(status),

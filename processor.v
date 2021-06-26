@@ -1,4 +1,4 @@
-module processor(
+module processor #(parameter cid)(
     input clk,
     input [1:0]status,
     input [15:0] DM_out,
@@ -24,6 +24,7 @@ module processor(
     wire B_read_en;
     wire C_read_en;
     wire D_read_en;
+    wire CID_read_en;
     
 
     wire PC_write_en;
@@ -69,6 +70,7 @@ module processor(
     wire [15:0]B_out;
     wire [15:0]C_out;
     wire [15:0]D_out;
+    wire [15:0]CID_out;
 
     register IR(
         //inputs
@@ -166,6 +168,12 @@ module processor(
         .data_out(D_out)
     );
 
+    CID #(.cid(cid)) cid1(
+        .data_out(CID_out)
+    );
+
+    
+
     
 
     ALU alu(
@@ -202,6 +210,7 @@ module processor(
         .B_read_en(B_read_en),
         .C_read_en(C_read_en),
 		.D_read_en(D_read_en),
+		.CID_read_en(CID_read_en),
 
         .PC_write_en(PC_write_en), 
         .AR_write_en(AR_write_en), 
@@ -215,6 +224,7 @@ module processor(
         .B_write_en(B_write_en),
         .C_write_en(C_write_en),
 		.D_write_en(D_write_en),
+
 
         .PC_inc_en(PC_inc_en),
         .AC_inc_en(AC_inc_en),
@@ -236,6 +246,7 @@ module processor(
         .B_out(B_out),
         .C_out(C_out),
 		.D_out(D_out),
+		.CID_out(CID_out),
         .PC_read_en(PC_read_en),
         .AR_read_en(AR_read_en),
         .AC_read_en(AC_read_en),
@@ -247,6 +258,7 @@ module processor(
 		.B_read_en(B_read_en),
 		.C_read_en(C_read_en),
 		.D_read_en(D_read_en),
+		.CID_read_en(CID_read_en),
         //output
         .bus(bus)
     );
