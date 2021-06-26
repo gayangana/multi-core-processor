@@ -11,6 +11,7 @@ module bus(
         input [15:0]A_out,
         input [15:0]B_out,
         input [15:0]C_out,
+        input [15:0]D_out,
         input PC_read_en,
         input AR_read_en,
         input AC_read_en,
@@ -21,6 +22,7 @@ module bus(
         input A_read_en,
         input B_read_en,
         input C_read_en,
+        input D_read_en,
         output reg [15:0] bus
     );	
 	
@@ -66,6 +68,8 @@ module bus(
              bus = B_out;
         else if (C_read_en == 1'b1)
              bus = C_out;
+        else if (D_read_en == 1'b1)
+             bus = D_out;
     end
 
 
