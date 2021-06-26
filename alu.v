@@ -8,9 +8,16 @@ module ALU(
 	);
 
     always @(posedge i_clk)begin
-        case(i_alu_op)
+        case(i_alu_op)	 
+			
             3'd1: o_alu_out <= i_in1 + i_in2;
-            3'd2: o_alu_out <= i_in2 - i_in1;
+            3'd2: begin
+                if (i_in2 > i_in1)
+                    o_alu_out <= i_in2 - i_in1;
+                else 
+                    o_alu_out <= 16'b0;	  
+			end
+			
             3'd3: o_alu_out <= i_in1 * i_in2;
             3'd4: o_alu_out <= i_in2 / i_in1;
             3'd5: o_alu_out <= i_in2 % i_in1;
