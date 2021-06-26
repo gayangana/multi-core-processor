@@ -5,7 +5,7 @@ module IRAM (
     output reg [15:0] data_out
 );
 
-    reg [15:0] ram[65535:0];
+    reg [15:0] ram[1024:0];
 
     
     parameter LDAC  = 16'd5 ;

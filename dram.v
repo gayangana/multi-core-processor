@@ -6,10 +6,9 @@ module DRAM (
     output reg [15:0] data_out
     );
 
-    reg [15:0] ram [65535:0];
+    reg [15:0] ram [1024:0];
 
     initial begin
-        ram[65402] = 16'd5;
         //ram[10]= 16'd85;
 
         // ram[0] = 3;
