@@ -43,7 +43,7 @@ module processor(
     wire AC_clear_en;
     wire ALU_to_AC_write_en;
 
-    wire [1:0]alu_op;
+    wire [2:0]alu_op;
     wire z;
 
     wire [15:0] alu_out;

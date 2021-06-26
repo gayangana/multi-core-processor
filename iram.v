@@ -39,13 +39,13 @@ module IRAM (
         // ram[2] = MVACR;  //TOTAL
         // ram[3] = LDAC;
         // ram[4] = 16'd4;
-        // ram[5] = MUL;
+        // ram[5] = MOD;
         // ram[6] = STAC;
         // ram[7] = 16'd65400;
         // ram[8] = ENDOP;
 
         //assmebly code
-        ram[0] = CLAC;
+       ram[0] = CLAC;
         ram[1] = STAC;
         ram[2] = 16'd6;
         ram[3] = LDAC;
@@ -104,13 +104,13 @@ module IRAM (
         ram[56] = ADD;
         ram[57] = MVACC;
         ram[58] = LDAC;
-        ram[59] = 16'd1;
-        ram[60] = MVACR;
-        ram[61] = LDAC;
+        ram[59] = 16'd8;
+        ram[60] = INAC;
+        ram[61] = STAC;
         ram[62] = 16'd8;
-        ram[63] = INAC;
-        ram[64] = STAC;
-        ram[65] = 16'd8;
+        ram[63] = MVACR;
+        ram[64] = LDAC;
+        ram[65] = 16'd1;
         ram[66] = SUB;
         ram[67] = JPNZ;
         ram[68] = 16'd14;
@@ -122,28 +122,29 @@ module IRAM (
         ram[74] = STAC;
         ram[75] = 16'd11;
         ram[76] = LDAC;
-        ram[77] = 16'd2;
-        ram[78] = MVACR;
-        ram[79] = LDAC;
+        ram[77] = 16'd7;
+        ram[78] = INAC;
+        ram[79] = STAC;
         ram[80] = 16'd7;
-        ram[81] = INAC;
-        ram[82] = STAC;
-        ram[83] = 16'd7;
+        ram[81] = MVACR;
+        ram[82] = LDAC;
+        ram[83] = 16'd2;
         ram[84] = SUB;
         ram[85] = JPNZ;
         ram[86] = 16'd10;
         ram[87] = LDAC;
-        ram[88] = 16'd0;
-        ram[89] = MVACR;
-        ram[90] = LDAC;
+        ram[88] = 16'd6;
+        ram[89] = INAC;
+        ram[90] = STAC;
         ram[91] = 16'd6;
-        ram[92] = INAC;
-        ram[93] = STAC;
-        ram[94] = 16'd6;
+        ram[92] = MVACR;
+        ram[93] = LDAC;
+        ram[94] = 16'd0;
         ram[95] = SUB;
         ram[96] = JPNZ;
         ram[97] = 16'd7;
         ram[98] = ENDOP;
+
 
 
 
