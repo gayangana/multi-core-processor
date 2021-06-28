@@ -1,5 +1,5 @@
 module CID #( parameter cid)(
-    output [15:0] data_out,
+    output [15:0] data_out
 );
 
 
