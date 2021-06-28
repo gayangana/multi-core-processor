@@ -1,6 +1,6 @@
 module IRAM (
     input clk,
-    input [15:0] data_in,
+    //input [15:0] data_in,
     input [15:0] addr,
     output reg [15:0] data_out
 );

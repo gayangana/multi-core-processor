@@ -61,10 +61,14 @@ module DRAM (
     always @(posedge clk)begin
         if (write_en_1 == 1)
             ram[addr_1] <= data_in_1;
-        else if (write_en_2 == 1)
-            ram[addr_2] <= data_in_2;
         else
             data_out_1 <= ram[addr_1];
+    end
+
+    always @(posedge clk)begin
+        if (write_en_2 == 1)
+            ram[addr_2] <= data_in_2;
+        else
             data_out_2 <= ram[addr_2];
     end
 
