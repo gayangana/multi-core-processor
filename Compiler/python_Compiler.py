@@ -7,6 +7,7 @@ try:
     matB = []
     matC = []
 
+    N = int(input('Enter number of cores: ').strip())
     D1 = int(input('Enter the number of rows in matrix A: ').strip())
     D2 = int(input('Enter the number of columns in matrix A/ number of rows in matrixB: ').strip())
     D3 = int(input('Enter the number of columns in matrix B: ').strip())
@@ -33,8 +34,8 @@ try:
             matrixC = [0]*(D1*D3)
             for i in range(D1):
                 matC += [[0]*D3]
-
-            memory += [D1,D2,D3,12,12+D1*D2,12+D1*D2+D2*D3,0,0,0,0,0,0] + matrixA + matrixB + matrixC +  [0]
+            P = 8 + D1*D2 + D2*D3 + D1*D3
+            memory += [N,D1,D2,D3,8,8+D1*D2,8+D1*D2+D2*D3,P] + matrixA + matrixB + matrixC +  [0]*(N*4 + 1)
 
             memory_file = open("memory.txt","w")
             memory_file.writelines(["%s\n" % item for item in memory])
@@ -49,7 +50,7 @@ try:
             for i in range(D1):
                 FlatMatC += matC[i]
 
-            result_file = open("python_1 2result_matrix.txt","w")
+            result_file = open("python_result_matrix.txt","w")
             result_file.writelines(["%s\n" % item for item in FlatMatC])
             result_file.close()
 
