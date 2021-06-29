@@ -1,9 +1,24 @@
 module DRAM (
     input clk,
-    input write_en,
-    input [15:0]addr,
-    input [15:0] data_in,
-    output reg [15:0] data_out
+    input write_en_1,
+    input [15:0]addr_1,
+    input [15:0] data_in_1,
+    output reg [15:0] data_out_1,
+
+    input write_en_2,
+    input [15:0]addr_2,
+    input [15:0] data_in_2,
+    output reg [15:0] data_out_2,
+    
+    input write_en_3,
+    input [15:0]addr_3,
+    input [15:0] data_in_3,
+    output reg [15:0] data_out_3,
+
+    input write_en_4,
+    input [15:0]addr_4,
+    input [15:0] data_in_4,
+    output reg [15:0] data_out_4
     );
 
     reg [15:0] ram [1024:0];
@@ -55,10 +70,31 @@ module DRAM (
 
 
     always @(posedge clk)begin
-        if (write_en == 1)
-            ram[addr] <= data_in;
+        if (write_en_1 == 1)
+            ram[addr_1] <= data_in_1;
         else
-            data_out <= ram[addr];
+            data_out_1 <= ram[addr_1];
+    end
+
+    always @(posedge clk)begin
+        if (write_en_2 == 1)
+            ram[addr_2] <= data_in_2;
+        else
+            data_out_2 <= ram[addr_2];
+    end
+
+    always @(posedge clk)begin
+        if (write_en_3 == 1)
+            ram[addr_3] <= data_in_3;
+        else
+            data_out_3 <= ram[addr_3];
+    end
+
+    always @(posedge clk)begin
+        if (write_en_4 == 1)
+            ram[addr_4] <= data_in_4;
+        else
+            data_out_4 <= ram[addr_4];
     end
 
 endmodule
