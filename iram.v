@@ -453,17 +453,8 @@ module IRAM (
 
     always @(posedge clk) begin
         data_out_1 <= ram[addr_1];
-    end
-
-    always @(posedge clk) begin
         data_out_2 <= ram[addr_2];
-    end
-
-    always @(posedge clk) begin
         data_out_3 <= ram[addr_3];
-    end
-
-     always @(posedge clk) begin
         data_out_4 <= ram[addr_4];
     end
 

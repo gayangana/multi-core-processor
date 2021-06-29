@@ -74,23 +74,17 @@ module DRAM (
             ram[addr_1] <= data_in_1;
         else
             data_out_1 <= ram[addr_1];
-    end
 
-    always @(posedge clk)begin
         if (write_en_2 == 1)
             ram[addr_2] <= data_in_2;
         else
             data_out_2 <= ram[addr_2];
-    end
-
-    always @(posedge clk)begin
+   
         if (write_en_3 == 1)
             ram[addr_3] <= data_in_3;
         else
             data_out_3 <= ram[addr_3];
-    end
-
-    always @(posedge clk)begin
+    
         if (write_en_4 == 1)
             ram[addr_4] <= data_in_4;
         else

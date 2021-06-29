@@ -18,3 +18,5 @@ selector.v.bak
 processor.v.bak
 decoder.v
 wave.asdb.error
+dram.v.bak
+iram.v.bak
