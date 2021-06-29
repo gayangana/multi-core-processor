@@ -30,7 +30,7 @@ for j in result: MatrixC1 += j
 print(MatrixC1)
 MatrixC1 = list(map(str,MatrixC1))
 
-Total = [n, d1, d2, d3, 8,8 + d1 * d2, 8 + d1 * d2 + d2 * d3, 8 + d1 * d2 + d2 * d3 + d1 * d3] + MatrixA1 + MatrixB1 + MatrixC + [0]*(4*n)
+Total = [n, d1, d2, d3, 8,8 + d1 * d2, 8 + d1 * d2 + d2 * d3, 8 + d1 * d2 + d2 * d3 + d1 * d3] + MatrixA1 + MatrixB1 + MatrixC + [0]*(4*n+1)
 Total = list(map(str,Total))
 
 with open('memory.txt', 'w') as f:
