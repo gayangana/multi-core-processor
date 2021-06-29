@@ -8,7 +8,10 @@ module IRAM (
     output reg [15:0] data_out_2,
 
     input [15:0] addr_3,
-    output reg [15:0] data_out_3
+    output reg [15:0] data_out_3,
+
+    input [15:0] addr_4,
+    output reg [15:0] data_out_4
 );
 
     reg [15:0] ram[1024:0];
@@ -458,6 +461,10 @@ module IRAM (
 
     always @(posedge clk) begin
         data_out_3 <= ram[addr_3];
+    end
+
+     always @(posedge clk) begin
+        data_out_4 <= ram[addr_4];
     end
 
 endmodule

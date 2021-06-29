@@ -16,6 +16,7 @@ module top(
     wire [15:0] bus_1;
     wire [15:0] bus_2;
     wire [15:0] bus_3;
+    wire [15:0] bus_4;
 
     wire [15:0] proc_addr_1;
     wire proc_write_en_1;
@@ -29,6 +30,9 @@ module top(
 
     wire [15:0] PC_out_3;
     wire [15:0] IM_out_3;
+
+    wire [15:0] PC_out_4;
+    wire [15:0] IM_out_4;
     
 
     wire [15:0]proc_data_out_1;
@@ -43,11 +47,17 @@ module top(
     wire [15:0]proc_write_en_3;
     wire [15:0]proc_data_in_3;
 
+    wire [15:0]proc_data_out_4;
+    wire [15:0]proc_addr_4;
+    wire [15:0]proc_write_en_4;
+    wire [15:0]proc_data_in_4;
+
     wire end_process_1;
     wire end_process_2;
     wire end_process_3;
+    wire end_process_4;
 
-    assign end_process = end_process_1 & end_process_2 & end_process_3;
+    assign end_process = end_process_1 & end_process_2 & end_process_3 & end_process_4;
 
 
 
@@ -94,6 +104,20 @@ module top(
         .end_process(end_process_3)
     );
 
+     processor  #(.cid(16'd3)) core4 (
+        //inputs
+        .clk(clk),
+        .status(status),
+        .DM_out(proc_data_out_4),
+        .IM_out(IM_out_4),
+        //outputs
+        .bus(bus_4),
+        .AR_out(proc_addr_4),
+        .DM_write_en(proc_write_en_4),
+        .PC_out(PC_out_4),
+        .end_process(end_process_4)
+    );
+
 
     selector selector1(
         //inputs
@@ -129,10 +153,15 @@ module top(
         .addr_3(proc_addr_3),
         .data_in_3(bus_3),
 
+        .write_en_4(proc_write_en_4),	
+        .addr_4(proc_addr_4),
+        .data_in_4(bus_4),
+
         //outputs
         .data_out_1(DM_out_1),
         .data_out_2(proc_data_out_2),
-        .data_out_3(proc_data_out_3)
+        .data_out_3(proc_data_out_3),
+        .data_out_4(proc_data_out_4)
         );
 
     IRAM instr_mem(
@@ -141,9 +170,11 @@ module top(
         .addr_1(PC_out_1),
         .addr_2(PC_out_2),
         .addr_3(PC_out_3),
+        .addr_4(PC_out_4),
         //output
         .data_out_1(IM_out_1),
         .data_out_2(IM_out_2),
-        .data_out_3(IM_out_3)
+        .data_out_3(IM_out_3),
+        .data_out_4(IM_out_4)
     );
 endmodule
