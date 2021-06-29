@@ -33,12 +33,12 @@ MatrixC1 = list(map(str,MatrixC1))
 Total = [n, d1, d2, d3, 8,8 + d1 * d2, 8 + d1 * d2 + d2 * d3, 8 + d1 * d2 + d2 * d3 + d1 * d3] + MatrixA1 + MatrixB1 + MatrixC + [0]*(4*n)
 Total = list(map(str,Total))
 
-with open('memory_input.txt', 'w') as f:
+with open('memory.txt', 'w') as f:
     for line in Total:
         f.write(line)
         f.write('\n')
 
-with open('python_matC.txt', 'w') as f:
+with open('python_result_matrix.txt', 'w') as f:
     for line in MatrixC1:
         f.write(line)
         f.write('\n')
