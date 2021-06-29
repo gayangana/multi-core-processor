@@ -30,22 +30,28 @@ module IRAM (
     parameter JPNZ  = 16'd48;
     parameter NOP   = 16'd50;
     parameter ENDOP = 16'd51;
+    parameter MVACA = 16'd52;
+    parameter MVACB = 16'd53;
+    parameter MVACD = 16'd54;
+    parameter LDDAC = 16'd55;
+    parameter STDAC = 16'd59;
+    parameter JPPZ  = 16'd62;
+    parameter MVCID = 16'd64;
 
     initial begin
 
-        
-        // ram[0] = LDAC;
-        // ram[1] = 16'd2;
-        // ram[2] = MVACR;  //TOTAL
-        // ram[3] = LDAC;
-        // ram[4] = 16'd4;
-        // ram[5] = MOD;
-        // ram[6] = STAC;
-        // ram[7] = 16'd65400;
-        // ram[8] = ENDOP;
+        // ram[0] = MVCID;
+        // ram[1] = MVACD;
+        // ram[2] = LDAC;
+        // ram[3] = 16'd4;
+        // ram[4] = STDAC;
+        // ram[5] = LDAC;
+        // ram[6] = 16'd23;
+        // ram[7] = ENDOP;
+
 
         //assmebly code
-       ram[0] = CLAC;
+        ram[0] = CLAC;
         ram[1] = STAC;
         ram[2] = 16'd6;
         ram[3] = LDAC;
