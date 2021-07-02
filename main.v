@@ -3,6 +3,7 @@ module main(
     input [15:0]com_data_in,
     input data_write_start,
     input data_write_done,
+    input [3:0]n_cores,
 
     output reg [15:0]com_data_out,
     output reg  [1:0]state,
@@ -11,7 +12,11 @@ module main(
 
 );
 
+
+
+
 top top1(
+    .n_cores(n_cores),
     .clk(clk),
     .status(status),
     .com_data_in(com_data_in),//

@@ -6,6 +6,7 @@ module top_tb();
     reg [15:0]com_data_in;	
 	reg data_write_start;
 	reg data_write_done;
+    reg [3:0]n_cores;
    
     wire [15:0]com_data_out;
     wire [1:0]state;
@@ -19,6 +20,13 @@ module top_tb();
 
 
     initial begin
+        //4 cores 4'b1111
+        //3 cores 4'b0111
+        //2 cores 4'b0011
+        //1 cores 4'b0001
+
+        n_cores = 4'b0111;
+        
         clk = 1'b0;	
 		data_write_start = 1'b1;
 		data_write_done = 1'b0;
@@ -57,6 +65,7 @@ module top_tb();
     .data_write_start(data_write_start),
     .data_write_done(data_write_done),
 	.state(state),
+    .n_cores(n_cores),
     .com_data_out(com_data_out),
     .output_write_done(output_write_done),
     .output_write_start(output_write_start)

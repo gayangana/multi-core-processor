@@ -3,6 +3,7 @@ module control_unit(
     input z,
     input [15:0] instruction,
     input [1:0]status,
+    input core_activate,
     output reg [2:0] alu_op,
     output reg end_process,
 
@@ -189,7 +190,7 @@ module control_unit(
                 end_process <= 1'b0;
 
 
-                if (status == 2'b01)
+                if (status == 2'b01 & core_activate == 1'b1)
                     state <= fetch1;
                 else
                     state <= idle;
