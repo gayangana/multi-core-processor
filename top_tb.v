@@ -25,7 +25,7 @@ module top_tb();
         //2 cores 4'b0011
         //1 cores 4'b0001
 
-        n_cores = 4'b0111;
+        n_cores = 4'b1111;
         
         clk = 1'b0;	
 		data_write_start = 1'b1;
