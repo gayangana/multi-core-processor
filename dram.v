@@ -66,7 +66,7 @@ module DRAM (input clk,
         else
             data_out_1 <= ram[addr_1];
         
-        for (i = 1; i < `NUM_C; i = i + 1) begin
+        for (i = 0; i < `NUM_C; i = i + 1) begin
             if (write_en[i] == 1)
                 ram[addr[i*16 +:16]] <= data_in[i*16 +:16];
             else
