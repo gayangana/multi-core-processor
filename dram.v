@@ -1,41 +1,31 @@
-module DRAM (
-    input clk,
-    input write_en_1,
-    input [15:0]addr_1,
-    input [15:0] data_in_1,
-    output reg [15:0] data_out_1,
+`define NUM_C 4 // # Predifined dram ports
 
-    input write_en_2,
-    input [15:0]addr_2,
-    input [15:0] data_in_2,
-    output reg [15:0] data_out_2,
+module DRAM (input clk,
+             input write_en_1,
+             input [15:0]addr_1,
+             input [15:0] data_in_1,
+             output reg [15:0] data_out_1,
+             
+             input [`NUM_C-1:0] write_en,
+             input [(`NUM_C*16)-1:0] addr, 
+             input [(`NUM_C*16)-1:0] data_in, 
+             output reg [(`NUM_C*16)-1:0] data_out);
     
-    input write_en_3,
-    input [15:0]addr_3,
-    input [15:0] data_in_3,
-    output reg [15:0] data_out_3,
-
-    input write_en_4,
-    input [15:0]addr_4,
-    input [15:0] data_in_4,
-    output reg [15:0] data_out_4
-    );
-
     reg [15:0] ram [1024:0];
-
+    
     initial begin
-        //ram[10]= 16'd85;
-
-        // ram[0] = 3;
-        // ram[1] = 3;
-        // ram[2] = 3;
-        // ram[3] = 12;
-        // ram[4] = 21;
-        // ram[5] = 30;
-        // ram[6] = 0;
-        // ram[7] = 0;
-        // ram[8] = 0;
-        // ram[9] = 0;
+        //ram[10] = 16'd85;
+        
+        // ram[0]  = 3;
+        // ram[1]  = 3;
+        // ram[2]  = 3;
+        // ram[3]  = 12;
+        // ram[4]  = 21;
+        // ram[5]  = 30;
+        // ram[6]  = 0;
+        // ram[7]  = 0;
+        // ram[8]  = 0;
+        // ram[9]  = 0;
         // ram[10] = 0;
         // ram[11] = 0;
         // ram[12] = 13;
@@ -65,30 +55,23 @@ module DRAM (
         // ram[36] = 0;
         // ram[37] = 0;
         // ram[38] = 0;
-
+        
     end
-
-
-    always @(posedge clk)begin
+    
+    integer i;
+    
+    always @(posedge clk) begin
         if (write_en_1 == 1)
             ram[addr_1] <= data_in_1;
         else
             data_out_1 <= ram[addr_1];
-
-        if (write_en_2 == 1)
-            ram[addr_2] <= data_in_2;
-        else
-            data_out_2 <= ram[addr_2];
-   
-        if (write_en_3 == 1)
-            ram[addr_3] <= data_in_3;
-        else
-            data_out_3 <= ram[addr_3];
-    
-        if (write_en_4 == 1)
-            ram[addr_4] <= data_in_4;
-        else
-            data_out_4 <= ram[addr_4];
+        
+        for (i = 1; i < `NUM_C; i = i + 1) begin
+            if (write_en[i] == 1)
+                ram[addr[i*16 +:16]] <= data_in[i*16 +:16];
+            else
+                data_out[i*16 +:16] <= ram[addr[i*16 +:16]];
+        end
     end
-
+    
 endmodule
