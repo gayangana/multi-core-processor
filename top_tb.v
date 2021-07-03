@@ -46,14 +46,14 @@ module top_tb();
             end
         end
         
-        // else begin
-        // $fwrite(out_file,"%d\n",com_data_out);
-        // if (output_write_done)begin
-        //     $fclose(data_file);
-        //     $fclose(out_file);
-        //     $stop;
-        // end
-    // end
+        else begin
+        $fwrite(out_file,"%d\n",com_data_out);
+        if (output_write_done)begin
+            $fclose(data_file);
+            $fclose(out_file);
+            $stop;
+        end
+    end
     end
     
     main main1(

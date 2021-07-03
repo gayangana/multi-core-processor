@@ -1,4 +1,4 @@
-`define NUM_C 4 // # predifined cores
+`define NUM_C 4 // # Predifined cores - 1
 
 module top(input clk,
            input [1:0]status,
@@ -55,15 +55,11 @@ module top(input clk,
     .com_data_in(com_data_in),
     .com_addr(com_addr),
     .com_wr_en(com_wr_en),
-    .proc_bus(bus[15:0]),
-    .proc_addr(proc_addr[15:0]),
-    .proc_wr_en(proc_write_en[0]),
     .DM_out(DM_out_1),
     //outputs
     .DM_data_in(DM_data_in_1),
     .DM_addr(DM_addr_1),
     .DM_write_en(DM_write_en_1),
-    .proc_data_out(proc_data_out[15:0]),
     .com_data_out(com_data_out)
     );
     
