@@ -4,12 +4,13 @@ n  = int(input('Enter Number of Cores : '))
 d1 = int(input('Enter Dimension 01 : '))
 d2 = int(input('Enter Dimension 02 : '))
 d3 = int(input('Enter Dimension 03 : '))
-r  = int(input('Enter Range : ')) 
+r1 = int(input('Enter Upper Bound : '))
+r2 = int(input('Enter Lower Bound : '))  
 
-MatrixA = [random.choices(population = range(0, r+1), k = d2) for i in range(d1)]
+MatrixA = [random.choices(population = range(r2, r1+1), k = d2) for i in range(d1)]
 print('MatrixA created')
 
-MatrixB = [random.choices(population=range(0, r+1), k=d3) for i in range(d2)]
+MatrixB = [random.choices(population=range(r2, r1+1), k=d3) for i in range(d2)]
 print('MatrixB created')
 
 MatrixC = [0] * (d1 * d3)
