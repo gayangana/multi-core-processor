@@ -5,7 +5,7 @@ module main(
     input data_write_done,
     input [3:0]n_cores,
 
-    output reg [15:0]com_data_out,
+    output  [15:0]com_data_out,
     output reg  [1:0]state,
     output reg output_write_done,
     output reg output_write_start

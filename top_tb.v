@@ -31,7 +31,7 @@ module top_tb();
 		data_write_start = 1'b1;
 		data_write_done = 1'b0;
         data_file =$fopen("memory.txt","r");  
-        out_file = $fopen("src/out.txt","w");  
+        out_file = $fopen("out.txt","w");  
 		
     end
 
