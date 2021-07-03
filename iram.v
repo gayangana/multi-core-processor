@@ -17,8 +17,8 @@ module IRAM (
     reg [15:0] ram[1024:0];
 
     
-    parameter LDAC  = 16'd5 ;
-    parameter STAC  = 16'd7 ;
+    parameter LDAC  = 16'd5;
+    parameter STAC  = 16'd7;
     parameter LDA   = 16'd9;
     parameter LDB   = 16'd14;
     parameter LDC   = 16'd19;
@@ -49,6 +49,7 @@ module IRAM (
     parameter MVD   = 16'd65;
 
     initial begin
+        //assembly code hard
         ram[0] = LDAC;
         ram[1] = 16'd7;
         ram[2] = MVACR;

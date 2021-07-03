@@ -12,6 +12,9 @@ module main(
 
 );
 
+reg [15:0]com_addr;
+reg com_wr_en;
+reg [1:0] status = 2'b11;
 
 
 
@@ -28,9 +31,6 @@ top top1(
 );
 
 
-reg [15:0]com_addr;
-reg com_wr_en;
-reg [1:0] status = 2'b11;
 
 
 
