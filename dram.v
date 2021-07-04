@@ -81,19 +81,17 @@ module DRAM (input clk,
     integer i;
     
     always @(posedge clk) begin
+        if (write_en_1 == 1)
+            ram[addr_1] <= data_in_1;
+        else
+            data_out_1 <= ram[addr_1];
+        
         for (i = 0; i < `NUM_C; i = i + 1) begin
             if (write_en[i] == 1)
                 ram[addr[i*16 +:16]] <= data_in[i*16 +:16];
             else
                 data_out[i*16 +:16] <= ram[addr[i*16 +:16]];
         end
-    end
-    
-    always @(posedge clk) begin
-        if (write_en_1 == 1)
-            ram[addr_1] <= data_in_1;
-        else
-            data_out_1 <= ram[addr_1];
     end
     
 endmodule

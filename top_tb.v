@@ -21,7 +21,8 @@ module top_tb();
     integer out_file;
     
     initial begin
-        n_cores = '1 >> (`NUM_C - 5);
+        n_cores =  ~0;
+        n_cores = n_cores >> (`NUM_C - 13);
 
         // n_cores = 8'b00011111;
         
