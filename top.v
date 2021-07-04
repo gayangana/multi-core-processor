@@ -4,6 +4,7 @@ module top(
     input [15:0]com_data_in,
     input [15:0]com_addr,
     input com_wr_en,
+    input [3:0]n_cores,
 
     output end_process,
     output [15:0]com_data_out
@@ -57,7 +58,7 @@ module top(
     wire end_process_3;
     wire end_process_4;
 
-    assign end_process = end_process_1 & end_process_2 & end_process_3 & end_process_4;
+    assign end_process = end_process_1 ;
 
 
 
@@ -68,6 +69,7 @@ module top(
         .status(status),
         .DM_out(proc_data_out_1),
         .IM_out(IM_out_1),
+        .core_activate(n_cores[0]),
         //outputs
         .bus(bus_1),
         .AR_out(proc_addr_1),
@@ -82,6 +84,7 @@ module top(
         .status(status),
         .DM_out(proc_data_out_2),
         .IM_out(IM_out_2),
+        .core_activate(n_cores[1]),
         //outputs
         .bus(bus_2),
         .AR_out(proc_addr_2),
@@ -96,6 +99,7 @@ module top(
         .status(status),
         .DM_out(proc_data_out_3),
         .IM_out(IM_out_3),
+        .core_activate(n_cores[2]),
         //outputs
         .bus(bus_3),
         .AR_out(proc_addr_3),
@@ -110,6 +114,7 @@ module top(
         .status(status),
         .DM_out(proc_data_out_4),
         .IM_out(IM_out_4),
+        .core_activate(n_cores[3]),
         //outputs
         .bus(bus_4),
         .AR_out(proc_addr_4),

@@ -3,6 +3,7 @@ module processor #(parameter cid)(
     input [1:0]status,
     input [15:0] DM_out,
     input [15:0] IM_out,
+    input core_activate,
 
     output  [15:0]bus,
     output  [15:0]AR_out,
@@ -52,6 +53,8 @@ module processor #(parameter cid)(
     wire [15:0] alu_out;
     wire [15:0] alu_in_1;
     wire [15:0] alu_in_2;
+
+    //wire core_activate,
 
     
 
@@ -194,6 +197,7 @@ module processor #(parameter cid)(
         .z(z),
         .instruction(IR_out),
         .status(status),
+        .core_activate(core_activate),
         //outputs
         .alu_op(alu_op),
         .end_process(end_process),
