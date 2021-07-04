@@ -1,5 +1,6 @@
+`include "definitions.v"
+
 `timescale 1ns/1ns
-`define NUM_C 16 // # Predifined cores - 1
 
 module top_tb();
     
@@ -20,12 +21,9 @@ module top_tb();
     integer out_file;
     
     initial begin
-        //4 cores 4'b1111
-        //3 cores 4'b0111
-        //2 cores 4'b0011
-        //1 cores 4'b0001
-        
-        n_cores = 16'b1111111111111111;
+        n_cores = '1 >> (`NUM_C - 5);
+
+        // n_cores = 8'b00011111;
         
         clk              = 1'b0;
         data_write_start = 1'b1;

@@ -1,4 +1,4 @@
-`define NUM_C 16 // # Predifined dram ports
+`include "definitions.v"
 
 module DRAM (input clk,
              input write_en_1,

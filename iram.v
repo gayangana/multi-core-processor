@@ -1,4 +1,4 @@
-`define NUM_C 16 // # Predifined iram ports
+`include "definitions.v"
 
 module IRAM (input clk,
              input [(`NUM_C*16)-1:0] addr, output reg [(`NUM_C*16)-1:0] data_out);

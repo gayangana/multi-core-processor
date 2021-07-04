@@ -1,4 +1,4 @@
-`define NUM_C 16 // # Predifined cores - 1
+`include "definitions.v"
 
 module main(input clk,
             input [15:0]com_data_in,

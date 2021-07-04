@@ -1,0 +1,6 @@
+`ifndef _definitions_v
+`define _definitions_v
+
+`define NUM_C 8
+
+`endif
