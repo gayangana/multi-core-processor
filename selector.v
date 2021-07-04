@@ -17,12 +17,9 @@ module selector(input clk,
                 DM_write_en = com_wr_en;
             end
             
-            // 2'b01: begin
-            //     DM_data_in    = proc_bus;
-            //     DM_addr       = proc_addr;
-            //     DM_write_en   = proc_wr_en;
-            //     proc_data_out = DM_out;
-            // end
+            2'b01: begin
+                DM_write_en   = 0;
+            end
             
             2'b10: begin
                 DM_addr      = com_addr;
