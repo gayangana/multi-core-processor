@@ -1,11 +1,11 @@
-`define NUM_C 4 // # Predifined cores - 1
+`define NUM_C 16 // # Predifined cores - 1
 
 module top(input clk,
            input [1:0]status,
            input [15:0]com_data_in,
            input [15:0]com_addr,
            input com_wr_en,
-           input [3:0]n_cores,
+           input [`NUM_C-1:0]n_cores,
            output end_process,
            output [15:0]com_data_out);
     
@@ -15,20 +15,20 @@ module top(input clk,
     wire [15:0] DM_out_1;
     wire DM_write_en_1;
     
-    wire [`NUM_C*16-1:0] proc_data_out;
-    wire [`NUM_C*16-1:0] IM_out;
+    wire [(`NUM_C*16)-1:0] proc_data_out;
+    wire [(`NUM_C*16)-1:0] IM_out;
     
     //outputs
-    wire [`NUM_C*16-1:0] bus;
-    wire [`NUM_C*16-1:0] proc_addr;
-    wire [`NUM_C*16-1:0] PC_out;
+    wire [(`NUM_C*16)-1:0] bus;
+    wire [(`NUM_C*16)-1:0] proc_addr;
+    wire [(`NUM_C*16)-1:0] PC_out;
     wire [`NUM_C-1:0] proc_write_en;
     wire [`NUM_C-1:0] end_proc;
     
     assign end_process = end_proc[0];
     
     genvar i;
-    
+
     generate
     for (i = 0; i < `NUM_C; i = i + 1) begin : gen_core
         processor #(.cid(i)) core (

@@ -1,4 +1,5 @@
 `timescale 1ns/1ns
+`define NUM_C 16 // # Predifined cores - 1
 
 module top_tb();
     
@@ -6,7 +7,7 @@ module top_tb();
     reg [15:0]com_data_in;
     reg data_write_start;
     reg data_write_done;
-    reg [3:0]n_cores;
+    reg [`NUM_C-1:0]n_cores;
     
     wire [15:0]com_data_out;
     wire [1:0]state;
@@ -24,7 +25,7 @@ module top_tb();
         //2 cores 4'b0011
         //1 cores 4'b0001
         
-        n_cores = 4'b1111;
+        n_cores = 16'b1111111111111111;
         
         clk              = 1'b0;
         data_write_start = 1'b1;
