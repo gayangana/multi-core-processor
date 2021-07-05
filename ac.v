@@ -1,4 +1,4 @@
-module AC(input clk,
+module AC (input clk,
           input ac_inc_en,
           input ac_write_en,
           input [15:0] data_in,

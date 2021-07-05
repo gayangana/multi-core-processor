@@ -1,6 +1,6 @@
 `include "definitions.v"
 
-module main(input clk,
+module main (input clk,
             input [15:0]com_data_in,
             input data_write_start,
             input data_write_done,
@@ -13,7 +13,7 @@ module main(input clk,
     reg com_wr_en;
     reg [1:0] status = 2'b11;
     
-    top top(
+    top top (
     .clk(clk),
     .status(status),
     .com_data_in(com_data_in),
@@ -24,7 +24,7 @@ module main(input clk,
     );
     
     always @(posedge clk)begin
-        case(status)
+        case (status)
             2'b11: begin
                 com_addr          <= 16'd65535;
                 output_write_done <= 1'b0;

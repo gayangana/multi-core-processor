@@ -1,4 +1,4 @@
-module reg_inc(input clk,
+module reg_inc (input clk,
                input reg_write_en,
                input reg_inc_en,
                input [15:0]data_in,

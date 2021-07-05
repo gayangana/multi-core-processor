@@ -1,4 +1,4 @@
-module ALU(input i_clk,
+module ALU (input i_clk,
            input [15:0] i_in1,
            input [15:0] i_in2,
            input [2:0] i_alu_op,
@@ -6,7 +6,7 @@ module ALU(input i_clk,
            output reg o_z);
     
     always @(posedge i_clk)begin
-        case(i_alu_op)
+        case (i_alu_op)
             3'd1: o_alu_out <= i_in1 + i_in2;
             3'd2: begin
                 if (i_in2 > i_in1)

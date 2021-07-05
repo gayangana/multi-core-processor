@@ -1,4 +1,4 @@
-module control_unit(input clk,
+module control_unit (input clk,
                     input z,
                     input [15:0] instruction,
                     input [1:0] status,

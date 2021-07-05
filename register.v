@@ -1,4 +1,4 @@
-module register(input clk,
+module register (input clk,
                 input reg_write_en,
                 input [15:0] data_in,
                 output reg [15:0] data_out);

@@ -1,6 +1,6 @@
 `include "definitions.v"
 
-module top(input clk,
+module top (input clk,
            input [1:0] status,
            input [15:0] com_data_in,
            input [15:0] com_addr,
@@ -39,7 +39,7 @@ module top(input clk,
     end
     endgenerate
     
-    selector selector(
+    selector selector (
     // inputs
     .clk(clk),
     .status(status),
@@ -54,7 +54,7 @@ module top(input clk,
     .com_data_out(com_data_out)
     );
     
-    DRAM data_mem(
+    DRAM data_mem (
     // inputs
     .clk(clk),
     .write_en(write_en),
@@ -64,7 +64,7 @@ module top(input clk,
     .data_out(data_out)
     );
     
-    IM instr_mem(
+    IM instr_mem (
     // inputs
     .clk(clk),
     .addr(PC_out),

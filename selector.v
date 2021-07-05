@@ -1,4 +1,4 @@
-module selector(input clk,
+module selector (input clk,
                 input [1:0] status,
                 input [15:0] com_data_in,
                 input [15:0] com_addr,
@@ -10,7 +10,7 @@ module selector(input clk,
                 output reg [15:0] com_data_out);
     
     always @(*) begin
-        case(status)
+        case (status)
             2'b00: begin
                 DM_data_in  = com_data_in;
                 DM_addr     = com_addr;

@@ -1,4 +1,4 @@
-module bus(input clk,
+module bus (input clk,
            input [15:0] PC_out,
            input [15:0] AR_out,
            input [15:0] AC_out,

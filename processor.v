@@ -60,7 +60,7 @@ module processor #(parameter cid)
     wire [15:0] D_out;
     wire [15:0] CID_out;
     
-    register IR(
+    register IR (
     // inputs
     .clk(clk),
     .reg_write_en(IR_write_en),
@@ -69,7 +69,7 @@ module processor #(parameter cid)
     .data_out(IR_out)
     );
     
-    register AR(
+    register AR (
     // inputs
     .clk(clk),
     .reg_write_en(AR_write_en),
@@ -78,7 +78,7 @@ module processor #(parameter cid)
     .data_out(AR_out)
     );
     
-    register DR(
+    register DR (
     // inputs
     .clk(clk),
     .reg_write_en(DR_write_en),
@@ -87,7 +87,7 @@ module processor #(parameter cid)
     .data_out(DR_out)
     );
     
-    reg_inc PC(
+    reg_inc PC (
     // inputs
     .clk(clk),
     .reg_write_en(PC_write_en),
@@ -97,7 +97,7 @@ module processor #(parameter cid)
     .data_out(PC_out)
     );
     
-    AC AC(
+    AC AC (
     // inputs
     .clk(clk),
     .ac_inc_en(AC_inc_en),
@@ -110,7 +110,7 @@ module processor #(parameter cid)
     .data_out(AC_out)
     );
     
-    register R(
+    register R (
     // inputs
     .clk(clk),
     .reg_write_en(R_write_en),
@@ -119,7 +119,7 @@ module processor #(parameter cid)
     .data_out(R_out)
     );
     
-    register A(
+    register A (
     // inputs
     .clk(clk),
     .reg_write_en(A_write_en),
@@ -128,7 +128,7 @@ module processor #(parameter cid)
     .data_out(A_out)
     );
     
-    register B(
+    register B (
     // inputs
     .clk(clk),
     .reg_write_en(B_write_en),
@@ -137,7 +137,7 @@ module processor #(parameter cid)
     .data_out(B_out)
     );
     
-    register C(
+    register C (
     // inputs
     .clk(clk),
     .reg_write_en(C_write_en),
@@ -146,7 +146,7 @@ module processor #(parameter cid)
     .data_out(C_out)
     );
     
-    register D(
+    register D (
     // inputs
     .clk(clk),
     .reg_write_en(D_write_en),
@@ -155,12 +155,12 @@ module processor #(parameter cid)
     .data_out(D_out)
     );
     
-    CID #(.cid(cid)) CID(
+    CID #(.cid(cid)) CID (
     // inputs
     .data_out(CID_out)
     );
     
-    ALU ALU(
+    ALU ALU (
     // inputs
     .i_clk(clk),
     .i_in1(R_out),
@@ -171,7 +171,7 @@ module processor #(parameter cid)
     .o_z(z)
     );
     
-    control_unit control(
+    control_unit control (
     // inputs
     .clk(clk),
     .z(z),
@@ -215,7 +215,7 @@ module processor #(parameter cid)
     .ALU_to_AC_write_en(ALU_to_AC_write_en)
     );
     
-    bus proc_bus(
+    bus proc_bus (
     // inputs
     .clk(clk),
     .PC_out(PC_out),

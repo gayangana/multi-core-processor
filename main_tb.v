@@ -48,7 +48,7 @@ module main_tb ();
     end
     end
     
-    main main(
+    main main (
     .clk(clk),
     .com_data_in(com_data_in),
     .data_write_start(data_write_start),
