@@ -1,10 +1,12 @@
 # Active HDL
 wave.asdbw/
 wave.asdb
+wave.asdb.error
 
 # I/O
 # memory.txt
 # out.txt
+# python_result_matrix.txt
 
 # ModelSim
 work/
@@ -12,11 +14,6 @@ work/
 *.mpf
 *.wlf
 transcript
-bus.v.bak
-top.v.bak
-selector.v.bak
-processor.v.bak
-decoder.v
-wave.asdb.error
-dram.v.bak
-iram.v.bak
+
+# Quartus
+*.bak
