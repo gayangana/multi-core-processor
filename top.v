@@ -5,15 +5,14 @@ module top(input clk,
            input [15:0]com_data_in,
            input [15:0]com_addr,
            input com_wr_en,
-           input [`NUM_C-1:0]n_cores,
            output end_process,
            output [15:0]com_data_out);
     
-    // For core 1
-    wire [15:0] DM_data_in_1;
-    wire [15:0] DM_addr_1;
-    wire [15:0] DM_out_1;
-    wire DM_write_en_1;
+    // For communication port
+    wire [15:0] DM_data_in_com;
+    wire [15:0] DM_addr_com;
+    wire [15:0] DM_out_com;
+    wire DM_write_en_com;
     
     wire [(`NUM_C*16)-1:0] proc_data_out;
     wire [(`NUM_C*16)-1:0] IM_out;
@@ -37,7 +36,6 @@ module top(input clk,
         .status(status),
         .DM_out(proc_data_out[i*16 +:16]),
         .IM_out(IM_out[i*16 +:16]),
-        .core_activate(n_cores[i]),
         //outputs
         .bus(bus[i*16 +:16]),
         .AR_out(proc_addr[i*16 +:16]),
@@ -55,11 +53,11 @@ module top(input clk,
     .com_data_in(com_data_in),
     .com_addr(com_addr),
     .com_wr_en(com_wr_en),
-    .DM_out(DM_out_1),
+    .DM_out(DM_out_com),
     //outputs
-    .DM_data_in(DM_data_in_1),
-    .DM_addr(DM_addr_1),
-    .DM_write_en(DM_write_en_1),
+    .DM_data_in(DM_data_in_com),
+    .DM_addr(DM_addr_com),
+    .DM_write_en(DM_write_en_com),
     .com_data_out(com_data_out)
     );
     
@@ -67,16 +65,16 @@ module top(input clk,
     //inputs
     .clk(clk),
 
-    .write_en_1(DM_write_en_1),	
-    .addr_1(DM_addr_1),
-    .data_in_1(DM_data_in_1),
+    .write_en_com(DM_write_en_com),	
+    .addr_com(DM_addr_com),
+    .data_in_com(DM_data_in_com),
 
     .write_en(proc_write_en),
     .addr(proc_addr),
     .data_in(bus),
     
     //outputs
-    .data_out_1(DM_out_1),
+    .data_out_com(DM_out_com),
     .data_out(proc_data_out)
     );
     
@@ -87,4 +85,5 @@ module top(input clk,
     //output
     .data_out(IM_out)
     );
+    
 endmodule
