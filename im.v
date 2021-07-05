@@ -1,41 +1,34 @@
 `include "definitions.v"
 
 module IM (input clk,
-           input [(`NUM_C*16)-1:0] addr, 
-           output reg [(`NUM_C*16)-1:0] data_out);
+           input [(`NUM_C*16)-1:0] addr, output reg [(`NUM_C*16)-1:0] data_out);
     
     reg [15:0] ram[1024:0];
     
     parameter LDAC  = 16'd5;
     parameter STAC  = 16'd7;
-    parameter LDA   = 16'd9;
-    parameter LDB   = 16'd14;
-    parameter LDC   = 16'd19;
-    parameter STC   = 16'd24;
-    parameter MVACR = 16'd29;
-    parameter MVACC = 16'd30;
-    parameter MVA   = 16'd31;
-    parameter MVB   = 16'd32;
-    parameter MVC   = 16'd33;
-    parameter INAC  = 16'd34;
-    parameter CLAC  = 16'd35;
-    parameter ADD   = 16'd36;
-    parameter SUB   = 16'd38;
-    parameter MUL   = 16'd40;
-    parameter DIV   = 16'd42;
-    parameter MOD   = 16'd44;
-    parameter JUMP  = 16'd46;
-    parameter JPNZ  = 16'd48;
-    parameter NOP   = 16'd50;
-    parameter ENDOP = 16'd51;
-    parameter MVACA = 16'd52;
-    parameter MVACB = 16'd53;
-    parameter MVACD = 16'd54;
-    parameter LDDAC = 16'd55;
-    parameter STDAC = 16'd59;
-    parameter JPPZ  = 16'd62;
-    parameter MVCID = 16'd64;
-    parameter MVD   = 16'd65;
+    parameter LDDAC = 16'd9;
+    parameter STDAC = 16'd13;
+    parameter ADD   = 16'd16;
+    parameter SUB   = 16'd18;
+    parameter MUL   = 16'd20;
+    parameter DIV   = 16'd22;
+    parameter MOD   = 16'd24;
+    parameter CLAC  = 16'd26;
+    parameter INAC  = 16'd27;
+    parameter JPNZ  = 16'd28;
+    parameter JPPZ  = 16'd30;
+    parameter MVCID = 16'd32;
+    parameter MVA   = 16'd33;
+    parameter MVB   = 16'd34;
+    parameter MVC   = 16'd35;
+    parameter MVD   = 16'd36;
+    parameter MVACR = 16'd37;
+    parameter MVACA = 16'd38;
+    parameter MVACB = 16'd39;
+    parameter MVACC = 16'd40;
+    parameter MVACD = 16'd41;
+    parameter ENDOP = 16'd42;
     
     initial begin
         ram[0]   = MVCID;
