@@ -67,44 +67,44 @@ module processor #(parameter cid)
     wire [15:0]CID_out;
     
     register IR(
-    //inputs
+    // inputs
     .clk(clk),
     .reg_write_en(IR_write_en),
     .data_in(bus),
-    //outputs
+    // outputs
     .data_out(IR_out)
     );
     
     register AR(
-    //inputs
+    // inputs
     .clk(clk),
     .reg_write_en(AR_write_en),
     .data_in(bus),
-    //outputs
+    // outputs
     .data_out(AR_out)
     );
     
     register DR(
-    //inputs
+    // inputs
     .clk(clk),
     .reg_write_en(DR_write_en),
     .data_in(bus),
-    //outputs
+    // outputs
     .data_out(DR_out)
     );
     
     reg_inc PC(
-    //inputs
+    // inputs
     .clk(clk),
     .reg_write_en(PC_write_en),
     .reg_inc_en(PC_inc_en),
     .data_in(bus),
-    //outputs
+    // outputs
     .data_out(PC_out)
     );
     
     AC AC1(
-    //inputs
+    // inputs
     .clk(clk),
     .ac_inc_en(AC_inc_en),
     .ac_write_en(AC_write_en),
@@ -112,12 +112,12 @@ module processor #(parameter cid)
     .alu_out(alu_out),
     .data_in(bus),
     .ac_clear(AC_clear_en),
-    //outputs
+    // outputs
     .data_out(AC_out)
     );
     
     register R(
-    //inputs
+    // inputs
     .clk(clk),
     .reg_write_en(R_write_en),
     .data_in(bus),
@@ -171,7 +171,7 @@ module processor #(parameter cid)
     );
     
     control_unit control(
-    //inputs
+    // inputs
     .clk(clk),
     .z(z),
     .instruction(IR_out),
