@@ -2,7 +2,7 @@
 
 `timescale 1ns/1ns
 
-module top_tb();
+module main_tb();
     
     reg clk;
     reg [15:0]com_data_in;
@@ -28,7 +28,7 @@ module top_tb();
         
     end
     
-    always #(5) clk <= ~clk;
+    always #(10) clk <= ~clk;
     
     
     always @(posedge clk) begin
