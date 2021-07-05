@@ -1,7 +1,7 @@
 module control_unit(input clk,
                     input z,
                     input [15:0] instruction,
-                    input [1:0]status,
+                    input [1:0] status,
                     output reg [2:0] alu_op,
                     output reg end_process,
                     output reg PC_read_en,
@@ -134,14 +134,8 @@ module control_unit(input clk,
     jppz1 = 16'd62,
     jppz2 = 16'd63;
     
-    
-    
-    
-    
-    
-    always @(posedge clk)begin
+    always @(posedge clk) begin
         case (state)
-            
             idle: begin
                 alu_op <= 3'd0;
                 
@@ -157,8 +151,7 @@ module control_unit(input clk,
                 B_read_en   <= 1'b0;
                 C_read_en   <= 1'b0;
                 CID_read_en <= 1'b0;
-                
-                
+
                 PC_write_en <= 1'b0;
                 AR_write_en <= 1'b0;
                 IR_write_en <= 1'b0;
@@ -172,7 +165,6 @@ module control_unit(input clk,
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
                 
-                
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
                 
@@ -180,7 +172,6 @@ module control_unit(input clk,
                 ALU_to_AC_write_en <= 1'b0;
                 
                 end_process <= 1'b0;
-                
                 
                 if (status == 2'b01)
                     state <= fetch1;
@@ -198,7 +189,7 @@ module control_unit(input clk,
                 R_read_en   <= 1'b0;
                 DM_read_en  <= 1'b0;
                 DR_read_en  <= 1'b0;
-                IM_read_en  <= 1'b1;     //IM write data to bus (PC is pointed to address of IM)
+                IM_read_en  <= 1'b1;    // IM write data to bus (PC is pointed to address of IM)
                 A_read_en   <= 1'b0;
                 B_read_en   <= 1'b0;
                 C_read_en   <= 1'b0;
@@ -206,7 +197,7 @@ module control_unit(input clk,
                 
                 PC_write_en <= 1'b0;
                 AR_write_en <= 1'b0;
-                IR_write_en <= 1'b1;    //bus write data to IR
+                IR_write_en <= 1'b1;    // bus write data to IR
                 AC_write_en <= 1'b0;
                 R_write_en  <= 1'b0;
                 DM_write_en <= 1'b0;
@@ -217,20 +208,16 @@ module control_unit(input clk,
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
                 
-                
-                
-                PC_inc_en <= 1'b1;      //PC = PC+1 (PC pointing to next instr)
+                PC_inc_en <= 1'b1;  // PC = PC+1 (PC pointing to next instr)
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
                 
-                
                 state <= fetch2;
             end
             
             fetch2: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -257,18 +244,16 @@ module control_unit(input clk,
                 B_write_en  <= 1'b0;
                 C_write_en  <= 1'b0;
                 
-                PC_inc_en <= 1'b0;      //PC = PC+1
+                PC_inc_en <= 1'b0;      // PC = PC+1
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
                 
-                
                 state <= fetch3;
             end
             
             fetch3: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -301,12 +286,10 @@ module control_unit(input clk,
                 AC_clear_en        <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
                 
-                
                 state <= fetch4;
             end
             
             fetch4: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -331,72 +314,8 @@ module control_unit(input clk,
                 
                 state <= instruction;
             end
-            
-            // fetch5:begin
-                //     alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b0;
-                //     IM_write_en <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //                  <= 1'b0;
-                //     ALU_write_en <= 1'b0;
-                
-                // <= 1'b0;
-                
-                
-                //     state <= fetch6;
-            // end
-            
-            // fetch6:begin
-                //     alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b0;
-                //     IM_write_en <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //                  <= 1'b0;
-                //     ALU_write_en <= 1'b0;
-                
-                // <= 1'b0;
-                
-                //     state <= instruction;
-            // end
-            
+
             ldac1: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -423,8 +342,7 @@ module control_unit(input clk,
                 B_write_en  <= 1'b0;
                 C_write_en  <= 1'b0;
                 
-                
-                PC_inc_en <= 1'b1;      //PC = PC+1
+                PC_inc_en <= 1'b1;      // PC = PC+1
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
@@ -432,45 +350,8 @@ module control_unit(input clk,
                 
                 state <= ldac2;
             end
-            
-            // ldac2: begin
-                
-                //     alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                //     A_read_en  <= 1'b0;
-                //     B_read_en  <= 1'b0;
-                //     C_read_en  <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b1;
-                //     IM_write_en <= 1'b0;
-                //     A_write_en  <= 1'b0;
-                //     B_write_en  <= 1'b0;
-                //     C_write_en  <= 1'b0;
-                
-                //     PC_inc_en <= 1'b1;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en <= 1'b0;
-                
-                //     state <= ldac3;
-            // end
-            
+
             ldac2: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -478,7 +359,7 @@ module control_unit(input clk,
                 IR_read_en <= 1'b0;
                 AC_read_en <= 1'b0;
                 R_read_en  <= 1'b0;
-                DM_read_en <= 1'b0;     //DM write data to bus
+                DM_read_en <= 1'b0;     // DM write data to bus
                 DR_read_en <= 1'b1;
                 IM_read_en <= 1'b0;
                 A_read_en  <= 1'b0;
@@ -506,42 +387,7 @@ module control_unit(input clk,
                 state <= fetch1;
             end
             
-            // ldac3: begin
-                
-                //     alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b1;       //Bus write data to AC
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b0;
-                //     IM_write_en <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //                  <= 1'b0;
-                //     ALU_write_en <= 1'b0;
-                
-                // <= 1'b0;
-                
-                //     state <= fetch1;
-            // end
-            
-            
             lddac1: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -569,7 +415,6 @@ module control_unit(input clk,
                 B_write_en  <= 1'b0;
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
-                
                 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
@@ -581,7 +426,6 @@ module control_unit(input clk,
             end
             
             lddac2: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -610,7 +454,6 @@ module control_unit(input clk,
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
                 
-                
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
                 
@@ -621,7 +464,6 @@ module control_unit(input clk,
             end
             
             lddac3: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -650,7 +492,6 @@ module control_unit(input clk,
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
                 
-                
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
                 
@@ -661,7 +502,6 @@ module control_unit(input clk,
             end
             
             lddac4: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -690,7 +530,6 @@ module control_unit(input clk,
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
                 
-                
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
                 
@@ -701,7 +540,6 @@ module control_unit(input clk,
             end
             
             stdac1: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -730,7 +568,6 @@ module control_unit(input clk,
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
                 
-                
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
                 
@@ -741,7 +578,6 @@ module control_unit(input clk,
             end
             
             stdac2: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -770,7 +606,6 @@ module control_unit(input clk,
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
                 
-                
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
                 
@@ -781,7 +616,6 @@ module control_unit(input clk,
             end
             
             stdac3: begin
-                
                 alu_op <= 3'd0;
                 
                 PC_read_en <= 1'b0;
@@ -809,7 +643,6 @@ module control_unit(input clk,
                 B_write_en  <= 1'b0;
                 C_write_en  <= 1'b0;
                 D_write_en  <= 1'b0;
-                
                 
                 PC_inc_en <= 1'b0;
                 AC_inc_en <= 1'b0;
@@ -847,7 +680,7 @@ module control_unit(input clk,
                 B_write_en  <= 1'b0;
                 C_write_en  <= 1'b0;
                 
-                PC_inc_en <= 1'b1;      //PC = PC+1
+                PC_inc_en <= 1'b1;  // PC = PC+1
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
@@ -893,7 +726,6 @@ module control_unit(input clk,
                 state <= fetch1;
             end
             
-            
             lda1: begin
                 alu_op <= 3'd0;
                 
@@ -929,43 +761,7 @@ module control_unit(input clk,
                 
                 state <= lda2;
             end
-            
-            // lda2: begin
-                //    alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                //     A_read_en  <= 1'b0;
-                //     B_read_en  <= 1'b0;
-                //     C_read_en  <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b0;
-                //     IM_write_en <= 1'b0;
-                //     A_write_en  <= 1'b0;
-                //     B_write_en  <= 1'b0;
-                //     C_write_en  <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en        <= 1'b0;
-                //     ALU_to_AC_write_en <= 1'b0;
-                
-                //     state <= lda3;
-            // end
-            
+
             lda2: begin
                 alu_op <= 3'd0;
                 
@@ -1072,43 +868,7 @@ module control_unit(input clk,
                 
                 state <= lda5;
             end
-            
-            // lda5: begin
-                //    alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                //     A_read_en  <= 1'b0;
-                //     B_read_en  <= 1'b0;
-                //     C_read_en  <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b1;
-                //     IM_write_en <= 1'b0;
-                //     A_write_en  <= 1'b0;
-                //     B_write_en  <= 1'b0;
-                //     C_write_en  <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en        <= 1'b0;
-                //     ALU_to_AC_write_en <= 1'b0;
-                
-                //     state <= lda6;
-            // end
-            
+
             lda5: begin
                 alu_op <= 3'd0;
                 
@@ -1180,43 +940,7 @@ module control_unit(input clk,
                 
                 state <= ldb2;
             end
-            
-            // ldb2: begin
-                //    alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                //     A_read_en  <= 1'b0;
-                //     B_read_en  <= 1'b0;
-                //     C_read_en  <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b1;
-                //     IM_write_en <= 1'b0;
-                //     A_write_en  <= 1'b0;
-                //     B_write_en  <= 1'b0;
-                //     C_write_en  <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en        <= 1'b0;
-                //     ALU_to_AC_write_en <= 1'b0;
-                
-                //     state <= ldb3;
-            // end
-            
+
             ldb2: begin
                 alu_op <= 3'd0;
                 
@@ -1252,6 +976,7 @@ module control_unit(input clk,
                 
                 state <= ldb3;
             end
+
             ldb3: begin
                 alu_op <= 3'd0;
                 
@@ -1324,42 +1049,6 @@ module control_unit(input clk,
                 state <= ldb5;
             end
             
-            // ldb5: begin
-                //    alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                //     A_read_en  <= 1'b0;
-                //     B_read_en  <= 1'b0;
-                //     C_read_en  <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b1;
-                //     IM_write_en <= 1'b0;
-                //     A_write_en  <= 1'b0;
-                //     B_write_en  <= 1'b0;
-                //     C_write_en  <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en        <= 1'b0;
-                //     ALU_to_AC_write_en <= 1'b0;
-                
-                //     state <= ldb6;
-            // end
-            
             ldb5: begin
                 alu_op <= 3'd0;
                 
@@ -1431,43 +1120,7 @@ module control_unit(input clk,
                 
                 state <= ldc2;
             end
-            
-            // ldc2: begin
-                //    alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                //     A_read_en  <= 1'b0;
-                //     B_read_en  <= 1'b0;
-                //     C_read_en  <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b1;
-                //     IM_write_en <= 1'b0;
-                //     A_write_en  <= 1'b0;
-                //     B_write_en  <= 1'b0;
-                //     C_write_en  <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en        <= 1'b0;
-                //     ALU_to_AC_write_en <= 1'b0;
-                
-                //     state <= ldc3;
-            // end
-            
+
             ldc2: begin
                 alu_op <= 3'd0;
                 
@@ -1574,43 +1227,7 @@ module control_unit(input clk,
                 
                 state <= ldc5;
             end
-            
-            // ldc5: begin
-                //    alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                //     A_read_en  <= 1'b0;
-                //     B_read_en  <= 1'b0;
-                //     C_read_en  <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b1;
-                //     IM_write_en <= 1'b0;
-                //     A_write_en  <= 1'b0;
-                //     B_write_en  <= 1'b0;
-                //     C_write_en  <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en        <= 1'b0;
-                //     ALU_to_AC_write_en <= 1'b0;
-                
-                //     state <= ldc6;
-            // end
-            
+
             ldc5: begin
                 alu_op <= 3'd0;
                 
@@ -1682,42 +1299,6 @@ module control_unit(input clk,
                 
                 state <= stc2;
             end
-            
-            // stc2: begin
-                //    alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     DR_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                //     A_read_en  <= 1'b0;
-                //     B_read_en  <= 1'b0;
-                //     C_read_en  <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b1;
-                //     IM_write_en <= 1'b0;
-                //     A_write_en  <= 1'b0;
-                //     B_write_en  <= 1'b0;
-                //     C_write_en  <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en        <= 1'b0;
-                //     ALU_to_AC_write_en <= 1'b0;
-                
-                //     state <= stc3;
-            // end
             
             stc2: begin
                 alu_op <= 3'd0;
@@ -1862,7 +1443,6 @@ module control_unit(input clk,
                 
                 state <= fetch1;
             end
-            
             
             mvacr1: begin
                 alu_op <= 3'd0;
@@ -2218,8 +1798,6 @@ module control_unit(input clk,
                 state <= fetch1;
             end
             
-            
-            
             add1: begin
                 alu_op <= 3'd1;
                 
@@ -2290,38 +1868,6 @@ module control_unit(input clk,
                 state <= fetch1;
             end
             
-            // addm1: begin
-                //     read_en  <= 16'b0000000000000000;
-                //     write_en <= 16'b0000000000000000;
-                //     inc_en   <= 16'b0000000000000000;
-                //     alu_op   <= 3'd0;
-                //     state    <= addm2;
-            // end
-            
-            // addm2: begin
-                //     read_en  <= 16'b0000000000000000;
-                //     write_en <= 16'b0000000000000000;
-                //     inc_en   <= 16'b0000000000000000;
-                //     alu_op   <= 3'd0;
-                //     state    <= addm3;
-            // end
-            
-            // addm3: begin
-                //     read_en  <= 16'b0000000000000000;
-                //     write_en <= 16'b0000000000000000;
-                //     inc_en   <= 16'b0000000000000000;
-                //     alu_op   <= 3'd0;
-                //     state    <= addm4;
-            // end
-            
-            // addm4: begin
-                //     read_en  <= 16'b0000000000000000;
-                //     write_en <= 16'b0000000000000000;
-                //     inc_en   <= 16'b0000000000000000;
-                //     alu_op   <= 3'd0;
-                //     state    <= fetch1;
-            // end
-            
             inac1: begin
                 alu_op <= 3'd0;
                 
@@ -2349,7 +1895,7 @@ module control_unit(input clk,
                 C_write_en  <= 1'b0;
                 
                 PC_inc_en <= 1'b0;
-                AC_inc_en <= 1'b1;      //AC = AC+1
+                AC_inc_en <= 1'b1;  // AC = AC+1
                 
                 AC_clear_en        <= 1'b0;
                 ALU_to_AC_write_en <= 1'b0;
@@ -2742,45 +2288,8 @@ module control_unit(input clk,
                     ALU_to_AC_write_en <= 1'b0;
                     
                     state <= jpnz2;
-                    
                 end
             end
-            
-            // jpnzx: begin
-                //         alu_op <= 3'd0;
-                
-                //         PC_read_en <= 1'b0;
-                //         AR_read_en <= 1'b0;
-                //         IR_read_en <= 1'b0;
-                //         AC_read_en <= 1'b0;
-                //         R_read_en  <= 1'b0;
-                //         DM_read_en <= 1'b0;
-                //         IM_read_en <= 1'b0;
-                //         A_read_en  <= 1'b0;
-                //         B_read_en  <= 1'b0;
-                //         C_read_en  <= 1'b0;
-                
-                //         PC_write_en <= 1'b0;
-                //         AR_write_en <= 1'b0;
-                //         IR_write_en <= 1'b0;
-                //         AC_write_en <= 1'b0;
-                //         R_write_en  <= 1'b0;
-                //         DM_write_en <= 1'b0;
-                //         DR_write_en <= 1'b0;
-                //         IM_write_en <= 1'b0;
-                //         A_write_en  <= 1'b0;
-                //         B_write_en  <= 1'b0;
-                //         C_write_en  <= 1'b0;
-                
-                //         PC_inc_en <= 1'b0;
-                //         AC_inc_en <= 1'b0;
-                
-                //         AC_clear_en        <= 1'b0;
-                //         ALU_to_AC_write_en <= 1'b0;
-                
-                //         state <= fetch1;
-            //     end
-            
             
             jpnz2: begin
                 alu_op <= 3'd0;
@@ -2796,7 +2305,7 @@ module control_unit(input clk,
                 B_read_en  <= 1'b0;
                 C_read_en  <= 1'b0;
                 
-                PC_write_en <= 1'b0;  //Bus write to PC
+                PC_write_en <= 1'b0;    // Bus write to PC
                 AR_write_en <= 1'b0;
                 IR_write_en <= 1'b0;
                 AC_write_en <= 1'b0;
@@ -2815,7 +2324,6 @@ module control_unit(input clk,
                 ALU_to_AC_write_en <= 1'b0;
                 
                 state <= fetch1;
-                
             end
             
             jppz1: begin
@@ -2888,7 +2396,6 @@ module control_unit(input clk,
                     ALU_to_AC_write_en <= 1'b0;
                     
                     state <= jppz2;
-                    
                 end
             end
             
@@ -2925,68 +2432,7 @@ module control_unit(input clk,
                 ALU_to_AC_write_en <= 1'b0;
                 
                 state <= fetch1;
-                
             end
-            
-            // jpnz3: begin
-                //     alu_op <= 3'd0;
-                
-                //     PC_read_en <= 1'b0;
-                //     AR_read_en <= 1'b0;
-                //     IR_read_en <= 1'b0;
-                //     AC_read_en <= 1'b0;
-                //     R_read_en  <= 1'b0;
-                //     DM_read_en <= 1'b0;
-                //     IM_read_en <= 1'b0;
-                
-                //     PC_write_en <= 1'b0;
-                //     AR_write_en <= 1'b0;
-                //     IR_write_en <= 1'b0;
-                //     AC_write_en <= 1'b0;
-                //     R_write_en  <= 1'b0;
-                //     DM_write_en <= 1'b0;
-                //     DR_write_en <= 1'b0;
-                //     IM_write_en <= 1'b0;
-                
-                //     PC_inc_en <= 1'b0;
-                //     AC_inc_en <= 1'b0;
-                
-                //     AC_clear_en        <= 1'b0;
-                //     ALU_to_AC_write_en <= 1'b0;
-                
-                //     state <= fetch1;
-                
-            // end
-            
-            
-            
-            // jmpz: begin                             //Check State Machine
-                //     read_en  <= 16'b0000000000000000;
-                //     write_en <= 16'b0000000000000000;
-                //     inc_en   <= 16'b0000000000000000;
-                //     alu_op   <= 3'd0;
-                
-                //     if (z == 1)
-                //         state <= fetch1;
-                //     else
-                //         state <= jmpzn1;
-            // end
-            
-            // jmpzn1: begin
-                //     read_en  <= 16'b0000000000000000;
-                //     write_en <= 16'b0000000000000000;
-                //     inc_en   <= 16'b0000000000000000;
-                //     alu_op   <= 3'd0;
-                //     state    <= jmpzn2;
-            // end
-            
-            // jmpzn2: begin
-                //     read_en  <= 16'b0000000000000000;
-                //     write_en <= 16'b0000000000000000;
-                //     inc_en   <= 16'b0000000000000000;
-                //     alu_op   <= 3'd0;
-                //     state    <= fetch1;
-            // end
             
             endop : begin
                 end_process <= 1'b1;
@@ -3024,15 +2470,7 @@ module control_unit(input clk,
                 
                 state <= endop;
             end
-            
-            // default: begin
-                //     read_en  <= 16'b0000000000000000;
-                //     write_en <= 16'b0000000000000000;
-                //     inc_en   <= 16'b0000000000000000;
-                //     alu_op   <= 3'd0;
-                //     state    <= fetch1;
-            // end
-            
         endcase
     end
+
 endmodule

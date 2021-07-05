@@ -9,7 +9,7 @@ module selector(input clk,
                 output reg DM_write_en,
                 output reg [15:0] com_data_out);
     
-    always @(*)begin
+    always @(*) begin
         case(status)
             2'b00: begin
                 DM_data_in  = com_data_in;
@@ -28,4 +28,5 @@ module selector(input clk,
             end
         endcase
     end
+
 endmodule

@@ -2,7 +2,7 @@
 
 `timescale 1ns/1ns
 
-module main_tb();
+module main_tb ();
     
     reg clk;
     reg [15:0]com_data_in;
@@ -13,7 +13,6 @@ module main_tb();
     wire [1:0]state;
     wire output_write_done;
     wire output_write_start;
-    
     
     integer data_file;
     integer scan_file;
@@ -28,11 +27,10 @@ module main_tb();
         
     end
     
-    always #(10) clk <= ~clk;
-    
+    always #(`CLOCK) clk <= ~clk;
     
     always @(posedge clk) begin
-        if (output_write_start == 1'b0)begin
+        if (output_write_start == 1'b0) begin
             scan_file = $fscanf(data_file, "%d\n", com_data_in);
             if ($feof(data_file)) begin
                 data_write_done  <= 1'b1;
@@ -50,7 +48,7 @@ module main_tb();
     end
     end
     
-    main main1(
+    main main(
     .clk(clk),
     .com_data_in(com_data_in),
     .data_write_start(data_write_start),

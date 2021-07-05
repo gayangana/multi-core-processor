@@ -1,8 +1,8 @@
 `include "definitions.v"
 
-module IRAM (input clk,
-             input [(`NUM_C*16)-1:0] addr, 
-             output reg [(`NUM_C*16)-1:0] data_out);
+module IM (input clk,
+           input [(`NUM_C*16)-1:0] addr, 
+           output reg [(`NUM_C*16)-1:0] data_out);
     
     reg [15:0] ram[1024:0];
     

@@ -13,7 +13,7 @@ module main(input clk,
     reg com_wr_en;
     reg [1:0] status = 2'b11;
     
-    top top1(
+    top top(
     .clk(clk),
     .status(status),
     .com_data_in(com_data_in),

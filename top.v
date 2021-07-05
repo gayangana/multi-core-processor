@@ -1,12 +1,12 @@
 `include "definitions.v"
 
 module top(input clk,
-           input [1:0]status,
-           input [15:0]com_data_in,
-           input [15:0]com_addr,
+           input [1:0] status,
+           input [15:0] com_data_in,
+           input [15:0] com_addr,
            input com_wr_en,
            output end_process,
-           output [15:0]com_data_out);
+           output [15:0] com_data_out);
 
     wire [((`NUM_C+1)*16)-1:0] bus;
     wire [((`NUM_C+1)*16)-1:0] addr;
@@ -64,11 +64,11 @@ module top(input clk,
     .data_out(data_out)
     );
     
-    IRAM instr_mem(
+    IM instr_mem(
+    // inputs
     .clk(clk),
-    //.data_in(bus),
     .addr(PC_out),
-    //output
+    // outputs
     .data_out(IM_out)
     );
     
