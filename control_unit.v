@@ -43,67 +43,69 @@ module control_unit (input clk,
     fetch3 = 16'd3,
     fetch4 = 16'd4,
     
-    ldac1 = 16'd5,
-    ldac2 = 16'd6,
+    nop1 = 16'd5,
+
+    ldac1 = 16'd6,
+    ldac2 = 16'd7,
     
-    stac1 = 16'd7,
-    stac2 = 16'd8,
+    stac1 = 16'd8,
+    stac2 = 16'd9,
     
-    lddac1 = 16'd9,
-    lddac2 = 16'd10,
-    lddac3 = 16'd11,
-    lddac4 = 16'd12,
+    lddac1 = 16'd10,
+    lddac2 = 16'd11,
+    lddac3 = 16'd12,
+    lddac4 = 16'd13,
     
-    stdac1 = 16'd13,
-    stdac2 = 16'd14,
-    stdac3 = 16'd15,
+    stdac1 = 16'd14,
+    stdac2 = 16'd15,
+    stdac3 = 16'd16,
     
-    add1 = 16'd16,
-    add2 = 16'd17,
+    add1 = 16'd17,
+    add2 = 16'd18,
     
-    sub1 = 16'd18,
-    sub2 = 16'd19,
+    sub1 = 16'd19,
+    sub2 = 16'd20,
     
-    mul1 = 16'd20,
-    mul2 = 16'd21,
+    mul1 = 16'd21,
+    mul2 = 16'd22,
     
-    div1 = 16'd22,
-    div2 = 16'd23,
+    div1 = 16'd23,
+    div2 = 16'd24,
     
-    mod1 = 16'd24,
-    mod2 = 16'd25,
+    mod1 = 16'd25,
+    mod2 = 16'd26,
     
-    clac1 = 16'd26,
+    clac1 = 16'd27,
     
-    inac1 = 16'd27,
+    inac1 = 16'd28,
     
-    jpnz1 = 16'd28,
-    jpnz2 = 16'd29,
+    jpnz1 = 16'd29,
+    jpnz2 = 16'd30,
     
-    jppz1 = 16'd30,
-    jppz2 = 16'd31,
+    jppz1 = 16'd31,
+    jppz2 = 16'd32,
     
-    mvcid1 = 16'd32,
+    mvcid1 = 16'd33,
     
-    mva1 = 16'd33,
+    mva1 = 16'd34,
     
-    mvb1 = 16'd34,
+    mvb1 = 16'd35,
     
-    mvc1 = 16'd35,
+    mvc1 = 16'd36,
     
-    mvd1 = 16'd36,
+    mvd1 = 16'd37,
     
-    mvacr1 = 16'd37,
+    mvacr1 = 16'd38,
     
-    mvaca1 = 16'd38,
+    mvaca1 = 16'd39,
     
-    mvacb1 = 16'd39,
+    mvacb1 = 16'd40,
     
-    mvacc1 = 16'd40,
+    mvacc1 = 16'd41,
     
-    mvacd1 = 16'd41,
+    mvacd1 = 16'd42,
     
-    endop1 = 16'd42;
+    endop1 = 16'd43;
     
     always @(posedge clk) begin
         case (state)
@@ -284,6 +286,44 @@ module control_unit (input clk,
                 AC_inc_en <= 1'b0;
                 
                 state <= instruction;
+            end
+
+            nop1: begin
+                alu_op <= 3'd0;
+                
+                PC_read_en  <= 1'b0;
+                AR_read_en  <= 1'b0;
+                IR_read_en  <= 1'b0;
+                AC_read_en  <= 1'b0;
+                R_read_en   <= 1'b0;
+                DM_read_en  <= 1'b0;
+                DR_read_en  <= 1'b0;
+                IM_read_en  <= 1'b0;
+                A_read_en   <= 1'b0;
+                B_read_en   <= 1'b0;
+                C_read_en   <= 1'b0;
+                CID_read_en <= 1'b0;
+                
+                PC_write_en <= 1'b0;
+                AR_write_en <= 1'b0;
+                IR_write_en <= 1'b0;
+                AC_write_en <= 1'b0;
+                R_write_en  <= 1'b0;
+                DM_write_en <= 1'b0;
+                DR_write_en <= 1'b0;
+                IM_write_en <= 1'b0;
+                A_write_en  <= 1'b0;
+                B_write_en  <= 1'b0;
+                C_write_en  <= 1'b0;
+                D_write_en  <= 1'b0;
+                
+                PC_inc_en <= 1'b0;
+                AC_inc_en <= 1'b0;
+                
+                AC_clear_en        <= 1'b0;
+                ALU_to_AC_write_en <= 1'b0;
+                
+                state <= fetch1;
             end
 
             ldac1: begin
