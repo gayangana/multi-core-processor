@@ -1,13 +1,13 @@
 module selector (input clk,
-                input [1:0] status,
-                input [15:0] com_data_in,
-                input [15:0] com_addr,
-                input com_wr_en,
-                input [15:0] DM_out,
-                output reg [15:0] DM_data_in,
-                output reg [15:0] DM_addr,
-                output reg DM_write_en,
-                output reg [15:0] com_data_out);
+                 input [1:0] status,
+                 input [15:0] com_data_in,
+                 input [15:0] com_addr,
+                 input com_wr_en,
+                 input [15:0] DM_out,
+                 output reg [15:0] DM_data_in,
+                 output reg [15:0] DM_addr,
+                 output reg DM_write_en,
+                 output reg [15:0] com_data_out);
     
     always @(*) begin
         case (status)
@@ -18,7 +18,7 @@ module selector (input clk,
             end
             
             2'b01: begin
-                DM_write_en = 0;
+                // DM_write_en = 0;
             end
             
             2'b10: begin
@@ -28,5 +28,5 @@ module selector (input clk,
             end
         endcase
     end
-
+    
 endmodule

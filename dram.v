@@ -1,10 +1,12 @@
 `include "definitions.v"
 
 module DRAM (input clk,
-             input [`NUM_C:0] write_en,
-             input [((`NUM_C+1)*16)-1:0] addr, 
-             input [((`NUM_C+1)*16)-1:0] data_in,
-             output reg [((`NUM_C+1)*16)-1:0] data_out);
+             input com_en,
+             input [15:0] com_addr,
+             input [`NUM_C-1:0] write_en,
+             input [(`NUM_C*16)-1:0] addr, 
+             input [(`NUM_C*16)-1:0] data_in,
+             output reg [(`NUM_C*16)-1:0] data_out);
     
     reg [15:0] ram [1024:0];
     
@@ -36,7 +38,10 @@ module DRAM (input clk,
     integer i;
     
     always @(posedge clk) begin
-        for (i = 0; i < `NUM_C + 1; i = i + 1) begin
+        if(com_en == 1)
+            ram[com_addr] <= data_in[15:0];
+
+        for (i = 0; i < `NUM_C; i = i + 1) begin
             if (write_en[i] == 1)
                 ram[addr[i*16 +:16]] <= data_in[i*16 +:16];
             else
