@@ -5,7 +5,6 @@ module main (input clk,
             input data_write_start,
             input data_write_done,
             output [15:0]com_data_out,
-            output reg [1:0]state,
             output reg output_write_done,
             output reg output_write_start);
     
@@ -31,7 +30,6 @@ module main (input clk,
                 if (data_write_start)begin
                     com_wr_en          <= 1'b1;
                     output_write_start <= 1'b0;
-                    state              <= 2'b00;
                     status             <= 2'b00;
                 end
             end
@@ -41,7 +39,6 @@ module main (input clk,
                 if (data_write_done) begin
                     com_addr  <= com_addr +1'b1;
                     com_wr_en <= 1'b0;
-                    state     <= 2'b01;
                     status    <= 2'b01;
                 end
             end
@@ -58,7 +55,6 @@ module main (input clk,
                 com_addr           <= com_addr + 1'b1;
                 if (com_addr == 16'd1024)begin
                     output_write_done <= 1'b1;
-                    state             <= 2'b11;
                     status            <= 2'b11;
                 end
             end
