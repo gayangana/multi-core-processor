@@ -5,11 +5,11 @@
 module main_tb ();
     
     reg clk;
-    reg [15:0]com_data_in;
+    reg [15:0] com_data_in;
     reg data_write_start;
     reg data_write_done;
     
-    wire [15:0]com_data_out;
+    wire [15:0] com_data_out;
     wire output_write_done;
     wire output_write_start;
     
@@ -38,13 +38,13 @@ module main_tb ();
         end
         
         else begin
-        $fwrite(out_file,"%d\n",com_data_out);
-        if (output_write_done)begin
-            $fclose(data_file);
-            $fclose(out_file);
-            $stop;
+            $fwrite(out_file,"%d\n",com_data_out);
+            if (output_write_done) begin
+                $fclose(data_file);
+                $fclose(out_file);
+                $stop;
+            end
         end
-    end
     end
     
     main main (
