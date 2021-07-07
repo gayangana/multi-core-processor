@@ -4,7 +4,7 @@ module IM (input clk,
            input [(`NUM_C*16)-1:0] addr, 
            output reg [(`NUM_C*16)-1:0] data_out);
     
-    reg [15:0] ram[1024:0];
+    reg [15:0] ram [1024:0];
     
     parameter NOP   = 16'd5;
     parameter LDAC  = 16'd6;
