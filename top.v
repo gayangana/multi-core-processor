@@ -1,5 +1,3 @@
-`include "definitions.v"
-
 module top (input clk,
             input [1:0] status,
             input [15:0] com_data_in,

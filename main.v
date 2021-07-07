@@ -1,5 +1,3 @@
-`include "definitions.v"
-
 module main (input clk,
             input [15:0] com_data_in,
             input data_write_start,

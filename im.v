@@ -1,5 +1,3 @@
-`include "definitions.v"
-
 module IM (input clk,
            input [15:0] addr, 
            output reg [15:0] data_out);

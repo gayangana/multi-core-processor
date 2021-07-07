@@ -1,5 +1,3 @@
-`include "definitions.v"
-
 module DRAM (input clk,
              input write_en,
              input [15:0] addr,
