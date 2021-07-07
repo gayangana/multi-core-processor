@@ -1,8 +1,8 @@
 `include "definitions.v"
 
 module IM (input clk,
-           input [(`NUM_C*16)-1:0] addr, 
-           output reg [(`NUM_C*16)-1:0] data_out);
+           input [15:0] addr, 
+           output reg [15:0] data_out);
     
     reg [15:0] ram[1024:0];
     
@@ -255,9 +255,7 @@ module IM (input clk,
     integer i;
     
     always @(posedge clk) begin
-        for (i = 0; i < `NUM_C; i = i + 1) begin
-            data_out[i*16 +:16] <= ram[addr[i*16 +:16]];
-        end
+        data_out <= ram[addr];
     end
     
 endmodule

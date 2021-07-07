@@ -1,14 +1,10 @@
 `include "definitions.v"
 
 module DRAM (input clk,
-             input write_en_1,
-             input [15:0]addr_1,
-             input [15:0] data_in_1,
-             output reg [15:0] data_out_1,
-             input [`NUM_C-2:0] write_en,
-             input [((`NUM_C-1)*16)-1:0] addr, 
-             input [((`NUM_C-1)*16)-1:0] data_in, 
-             output reg [((`NUM_C-1)*16)-1:0] data_out);
+             input write_en,
+             input [15:0] addr,
+             input [15:0] data_in,
+             output reg [15:0] data_out);
     
     reg [15:0] ram [1024:0];
     
@@ -40,17 +36,10 @@ module DRAM (input clk,
     integer i;
     
     always @(posedge clk) begin
-        if (write_en_1 == 1)
-            ram[addr_1] <= data_in_1;
+        if (write_en == 1)
+            ram[addr] <= data_in;
         else
-            data_out_1 <= ram[addr_1];
-        
-        for (i = 0; i < `NUM_C; i = i + 1) begin
-            if (write_en[i] == 1)
-                ram[addr[i*16 +:16]] <= data_in[i*16 +:16];
-            else
-                data_out[i*16 +:16] <= ram[addr[i*16 +:16]];
-        end
+            data_out <= ram[addr];
     end
     
 endmodule
