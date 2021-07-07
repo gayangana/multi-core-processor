@@ -1,17 +1,17 @@
 module selector(input clk,
-                input [1:0]status,
-                input [15:0]com_data_in,
-                input [15:0]com_addr,
+                input [1:0] status,
+                input [15:0] com_data_in,
+                input [15:0] com_addr,
                 input com_wr_en,
-                input [15:0]proc_bus,
-                input [15:0]proc_addr,
+                input [15:0] proc_bus,
+                input [15:0] proc_addr,
                 input proc_wr_en,
-                input [15:0]DM_out,
-                output reg [15:0]DM_data_in,
-                output reg [15:0]DM_addr,
-                output reg DM_write_en,
-                output reg [15:0]com_data_out,
-                output reg [15:0]proc_data_out);
+                input [15:0] DM_out,
+                output reg [15:0] com_data_out,
+                output reg [15:0] proc_data_out,
+                output reg [15:0] DM_data_in,
+                output reg [15:0] DM_addr,
+                output reg DM_write_en);
     
     always @(*)begin
         case(status)
