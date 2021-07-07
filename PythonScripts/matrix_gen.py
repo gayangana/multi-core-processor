@@ -1,3 +1,5 @@
+# To generate A, B matrices and C resultant by user input.
+
 try:
     matrixA = []
     matrixB = []
