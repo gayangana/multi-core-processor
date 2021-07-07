@@ -7,7 +7,7 @@ try:
     matB = []
     matC = []
 
-    N = int(input('Enter Number of Cores : ').strip())
+    N = 1
     D1 = int(input('Enter Number of Rows in Matrix A : ').strip())
     D2 = int(input('Enter Number of Columns in Matrix A / Number of Rows in Matrix B : ').strip())
     D3 = int(input('Enter Number of Columns in Matrix B : ').strip())

@@ -1,6 +1,6 @@
 import random
 
-n = int(input('Enter Number of Cores : '))
+n = 1
 d1 = int(input('Enter Dimension 1 : '))
 d2 = int(input('Enter Dimension 2 : '))
 d3 = int(input('Enter Dimension 3 : '))
