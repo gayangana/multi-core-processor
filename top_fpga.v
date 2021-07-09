@@ -1,6 +1,7 @@
-module top (input clk,
-            input [1:0] status);
-    
+module top_fpga (input clk,
+                 input [1:0] status,
+                 output end_process);
+
     wire [15:0] bus;
     wire [15:0] addr;
     wire write_en;
@@ -9,6 +10,8 @@ module top (input clk,
     wire [15:0] IM_out;
     wire [15:0] PC_out;
     wire end_proc;
+
+    assign end_process = end_proc;
     
     processor #(.cid(0)) core (
     // inputs
