@@ -1,3 +1,5 @@
+# To generate random A, B matrices and C resultant.
+
 import random
 
 n = int(input('Enter Number of Cores : '))

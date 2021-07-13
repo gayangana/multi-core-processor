@@ -1,3 +1,5 @@
+# To verify processor output.
+
 result_file = open("result_matrix.txt", "r")
 result = list(map(int, result_file.readlines()))
 result_file.close()
