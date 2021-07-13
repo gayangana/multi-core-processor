@@ -16,6 +16,8 @@ module main_tb ();
     integer data_file;
     integer scan_file;
     integer out_file;
+    realtime processing_time;
+    realtime start_time;
     
     initial begin
         clk              = 1'b0;
@@ -27,6 +29,15 @@ module main_tb ();
     end
     
     always #(`CLOCK) clk <= ~clk;
+
+    always@(posedge data_write_done)begin
+            start_time = $realtime;
+    end
+
+    always@(posedge output_write_start)begin
+            $display("Processing Time : %t",$realtime - start_time);
+    end
+
     
     always @(posedge clk) begin
         if (output_write_start == 1'b0) begin
@@ -38,14 +49,17 @@ module main_tb ();
         end
         
         else begin
+            processing_time = $realtime - start_time;
             $fwrite(out_file,"%d\n",com_data_out);
             if (output_write_done) begin
                 $fclose(data_file);
                 $fclose(out_file);
                 $stop;
+                
             end
         end
     end
+    
     
     main main (
     .clk(clk),
