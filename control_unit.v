@@ -766,9 +766,9 @@ module control_unit (input clk,
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
-                ALU_to_AC_write_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b1;
                 
-                state <= add2;
+                state <= fetch1;
             end
             
             add2: begin
@@ -836,9 +836,9 @@ module control_unit (input clk,
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
-                ALU_to_AC_write_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b1;
                 
-                state <= sub2;
+                state <= fetch1;
             end
             
             sub2: begin
@@ -906,9 +906,9 @@ module control_unit (input clk,
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
-                ALU_to_AC_write_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b1;
                 
-                state <= mul2;
+                state <= fetch1;
             end
             
             mul2: begin
@@ -976,9 +976,9 @@ module control_unit (input clk,
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
-                ALU_to_AC_write_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b1;
                 
-                state <= add2;
+                state <= fetch1;
             end
             
             div2: begin
@@ -1046,9 +1046,9 @@ module control_unit (input clk,
                 AC_inc_en <= 1'b0;
                 
                 AC_clear_en        <= 1'b0;
-                ALU_to_AC_write_en <= 1'b0;
+                ALU_to_AC_write_en <= 1'b1;
                 
-                state <= mod2;
+                state <= fetch1;
             end
             
             mod2: begin

@@ -5,7 +5,7 @@ module ALU (input i_clk,
            output reg [15:0] o_alu_out,
            output reg o_z);
     
-    always @(posedge i_clk) begin
+    always @(*) begin
         case (i_alu_op)
             3'd1: o_alu_out <= i_in1 + i_in2;
             3'd2: begin
