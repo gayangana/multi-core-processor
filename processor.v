@@ -162,13 +162,12 @@ module processor #(parameter cid)
     
     ALU ALU (
     // inputs
-    .i_clk(clk),
-    .i_in1(R_out),
-    .i_in2(AC_out),
-    .i_alu_op(alu_op),
+    .in1(R_out),
+    .in2(AC_out),
+    .alu_op(alu_op),
     // outputs
-    .o_alu_out(alu_out),
-    .o_z(z)
+    .alu_out(alu_out),
+    .z(z)
     );
     
     control_unit control (
