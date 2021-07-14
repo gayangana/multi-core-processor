@@ -16,39 +16,30 @@ module ALU_tb ();
         clk    = 1'b0;
         in1    = 15'b0;
         in2    = 15'b0;
-        alu_op = 2'd0;
+        alu_op = 3'd0;
     end
     
     always #(`CLOCK) clk = ~clk;
     
     initial begin
         @(posedge clk)
-        alu_op <= 2'd1;
+        alu_op <= 3'd1;
         in1    <= 15'd10;
         in2    <= 15'd20;
 
         
         @(posedge clk)
-        alu_op <= 2'd2;
+        alu_op <= 3'd2;
         in1    <= 15'd25;
         in2    <= 15'd21;
         
         
         @(posedge clk)
-        alu_op <= 2'd3;
+        alu_op <= 3'd3;
         in1    <= 15'd3;
         in2    <= 15'd25;
         
-        
-        // @(posedge clk)
-        // alu_op <= 2'd2;
-        // in1    <= 15'd10;
-        // in2    <= 15'd10;
-        
-        // @(posedge clk)
-        // alu_op <= 2'd1;
-        // in1    <= 15'd23;
-        // in2    <= 15'd25;
+    
     end
     
     ALU ALU (
